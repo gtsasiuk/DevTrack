@@ -26,8 +26,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    private User update(User user) {
-        return userRepository.save(user);
+    private void update(User user) {
+        userRepository.save(user);
     }
 
     private void deleteById(long id) {
