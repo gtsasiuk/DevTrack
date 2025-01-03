@@ -30,6 +30,9 @@ public class User {
     @Column(name = "password_hash")
     private String password;
 
+    @Column(name = "enabled")
+    private boolean enabled;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_roles",
