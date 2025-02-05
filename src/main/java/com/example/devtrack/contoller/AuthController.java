@@ -2,9 +2,10 @@ package com.example.devtrack.contoller;
 
 import com.example.devtrack.model.Role;
 import com.example.devtrack.model.User;
-import com.example.devtrack.repository.RoleRepository;
-import com.example.devtrack.repository.UserRepository;
+import com.example.devtrack.service.RoleService;
+import com.example.devtrack.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class AuthController {
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
-    private RoleRepository roleRepository;
+    private RoleService roleService;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -49,23 +50,24 @@ public class AuthController {
 
     @PostMapping("/auth/registration")
     public String registerUser(User user, Model model) {
-        if (userRepository.existsByUsername(user.getUsername())) {
+        if (userService.existsByUsername(user.getUsername())) {
             model.addAttribute("error", "Username is already taken.");
             return "auth/registration";
         }
-        if (userRepository.existsByEmail(user.getEmail())) {
+        if (userService.existsByEmail(user.getEmail())) {
             model.addAttribute("error", "Email is already in use.");
             return "auth/registration";
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setEnabled(true);
-        Role userRole = roleRepository.findByName("ROLE_USER");
+        String rawPassword = user.getPassword();
+
+        user.setPassword(passwordEncoder.encode(rawPassword));
+        Role userRole = roleService.findByName("ROLE_USER");
 
         user.getRoles().add(userRole);
 
-        userRepository.save(user);
+        userService.add(user);
 
-        return "redirect:/auth/login";
+        return "redirect:/home";
     }
 }
