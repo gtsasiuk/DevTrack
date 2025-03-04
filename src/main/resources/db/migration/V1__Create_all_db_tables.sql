@@ -28,6 +28,6 @@ CREATE TABLE projects (
                           advance_payment DECIMAL(10, 2),
                           deadline DATE NOT NULL,
                           user_id BIGINT NOT NULL,
-                          status ENUM('В розробці', 'Завершено', 'Скасовано') DEFAULT 'В розробці',
+                          status ENUM('ACTIVE', 'COMPLETED', 'CANCELLED') DEFAULT 'ACTIVE',
                           FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );

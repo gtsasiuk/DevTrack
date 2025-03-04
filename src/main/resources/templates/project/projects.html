@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Projects</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <h1>Projects</h1>
+    <a th:href="@{/note/create}" class="btn btn-success mb-3">Add New Note</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Project type</th>
+            <th>Topic</th>
+            <th>Client Name</th>
+            <th>Total Price</th>
+            <th>Advance payment</th>
+            <th>Deadline</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="project : ${projects}">
+            <td th:text="${project.id}"></td>
+            <td th:text="${project.projectType}"></td>
+            <td th:text="${project.topic}"></td>
+            <td th:text="${project.clientName}"></td>
+            <td th:text="${project.totalPrice}"></td>
+            <td th:text="${project.advancePayment}"></td>
+            <td th:text="${project.deadline}"></td>
+            <td th:text="${project.status.getDisplayName()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

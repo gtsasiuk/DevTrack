@@ -58,7 +58,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/auth/login", "/auth/registration", "/css/**", "/js/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/home", "/projects/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/home", "/projects", "/projects/**").hasAnyRole("USER", "ADMIN")
                         .anyRequest().authenticated())
                 .logout(logout -> logout
                         .logoutUrl("/auth/logout")

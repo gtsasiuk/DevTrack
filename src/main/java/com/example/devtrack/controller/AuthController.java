@@ -9,11 +9,8 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -58,9 +55,9 @@ public class AuthController {
             model.addAttribute("error", "Invalid username or password.");
         }
         if (logout != null) {
-            Cookie jwtCookie = new Cookie("jwt", null); // Встановити значення null для видалення
-            jwtCookie.setMaxAge(0); // Зробити cookie негайно видимим для браузера
-            jwtCookie.setPath("/"); // Вказати правильний шлях
+            Cookie jwtCookie = new Cookie("jwt", null);
+            jwtCookie.setMaxAge(0);
+            jwtCookie.setPath("/");
             if (!"localhost".equalsIgnoreCase(response.getHeader("Host"))) {
                 jwtCookie.setSecure(true);
             }
@@ -71,10 +68,8 @@ public class AuthController {
     }
 
     @PostMapping("/auth/login")
-    public String authenticateUser(@RequestParam String username,
-                                   @RequestParam String password,
-                                   HttpServletResponse response,
-                                   Model model) {
+    public String authenticateUser(@RequestParam String username, @RequestParam String password,
+                                   HttpServletResponse response, Model model) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
@@ -85,9 +80,8 @@ public class AuthController {
 
             Cookie jwtCookie = new Cookie("jwt", token);
             jwtCookie.setHttpOnly(true);
-            jwtCookie.setMaxAge(60 * 60); // 1 hour
+            jwtCookie.setMaxAge(24 * 60 * 60);
             jwtCookie.setPath("/");
-            // Remove Secure flag for localhost development
             if (!"localhost".equalsIgnoreCase(response.getHeader("Host"))) {
                 jwtCookie.setSecure(true);
             }
@@ -132,7 +126,7 @@ public class AuthController {
 
         Cookie jwtCookie = new Cookie("jwt", token);
         jwtCookie.setHttpOnly(true);
-        jwtCookie.setMaxAge(60 * 60);
+        jwtCookie.setMaxAge(24 * 60 * 60);
         jwtCookie.setPath("/");
         if (!"localhost".equalsIgnoreCase(response.getHeader("Host"))) {
             jwtCookie.setSecure(true);

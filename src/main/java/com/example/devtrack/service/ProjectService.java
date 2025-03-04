@@ -1,6 +1,7 @@
 package com.example.devtrack.service;
 
 import com.example.devtrack.model.Project;
+import com.example.devtrack.model.User;
 import com.example.devtrack.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,10 @@ public class ProjectService {
 
     public List<Project> findAll() {
         return projectRepository.findAll();
+    }
+
+    public List<Project> findAllByUser(User user) {
+        return projectRepository.findByUser(user);
     }
 
     public void update(Project project) {

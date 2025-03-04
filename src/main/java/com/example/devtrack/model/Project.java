@@ -36,7 +36,7 @@ public class Project {
 
     @Column(name = "advance_payment")
     @Min(value = 0)
-    private double advancePayment;
+    private double advancePayment = 0.0;
 
     @Column(name = "deadline")
     private LocalDate deadline;

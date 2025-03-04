@@ -43,4 +43,9 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Project> projects = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "User{id=" + id + ", username='" + username + "'}";
+    }
 }
