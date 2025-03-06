@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Project</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <h1>Create new project</h1>
+    <form th:action="@{/projects/create}" th:object="${project}" method="post">
+        <div class="mb-3">
+            <label class="form-label">Project type</label>
+            <input type="text" class="form-control" th:field="*{projectType}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Topic</label>
+            <input type="text" class="form-control" th:field="*{topic}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Client name</label>
+            <input type="text" class="form-control" th:field="*{clientName}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Total price</label>
+            <input type="number" class="form-control" th:field="*{totalPrice}" min="0" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Advance payment</label>
+            <input type="number" class="form-control" th:field="*{advancePayment}" min="0">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Deadline</label>
+            <input type="date" class="form-control" th:field="*{deadline}">
+        </div>
+        <button type="submit" class="btn btn-success">Create</button>
+        <a th:href="@{/projects}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+</body>
+</html>

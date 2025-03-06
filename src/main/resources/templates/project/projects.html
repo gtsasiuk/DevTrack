@@ -7,7 +7,7 @@
 <body>
 <div class="container mt-4">
     <h1>Projects</h1>
-    <a th:href="@{/note/create}" class="btn btn-success mb-3">Add New Note</a>
+    <a th:href="@{/projects/create}" class="btn btn-success mb-3">Add New Project</a>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -19,6 +19,7 @@
             <th>Advance payment</th>
             <th>Deadline</th>
             <th>Status</th>
+            <th>Edit/Delete</th>
         </tr>
         </thead>
         <tbody>
@@ -31,6 +32,10 @@
             <td th:text="${project.advancePayment}"></td>
             <td th:text="${project.deadline}"></td>
             <td th:text="${project.status.getDisplayName()}"></td>
+            <td>
+                <a th:href="@{/projects/edit/{id}(id=${project.id})}" class="btn btn-primary btn-sm">Edit</a>
+                <a th:href="@{/projects/delete/{id}(id=${project.id})}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
         </tr>
         </tbody>
     </table>
