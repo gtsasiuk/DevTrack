@@ -27,6 +27,8 @@ CREATE TABLE projects (
                           total_price DECIMAL(10, 2) NOT NULL,
                           advance_payment DECIMAL(10, 2),
                           deadline DATE NOT NULL,
+                          project_link VARCHAR(255),
+                          description VARCHAR(255),
                           user_id BIGINT NOT NULL,
                           status ENUM('ACTIVE', 'COMPLETED', 'CANCELLED') DEFAULT 'ACTIVE',
                           FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE

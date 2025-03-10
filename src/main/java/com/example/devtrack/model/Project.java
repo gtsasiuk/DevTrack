@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -32,14 +33,20 @@ public class Project {
 
     @Column(name = "total_price", nullable = false)
     @Min(value = 0)
-    private double totalPrice;
+    private BigDecimal totalPrice;
 
     @Column(name = "advance_payment")
     @Min(value = 0)
-    private double advancePayment = 0.0;
+    private BigDecimal advancePayment = BigDecimal.ZERO;
 
     @Column(name = "deadline")
-    private LocalDate deadline;
+    private LocalDate deadline = LocalDate.now();
+
+    @Column(name = "project_link")
+    private String projectLink = "";
+
+    @Column(name = "description")
+    private String description = "";
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
