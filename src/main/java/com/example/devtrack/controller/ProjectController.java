@@ -44,6 +44,7 @@ public class ProjectController {
         User currentUser = userService.findByUsername(username);
         List<Project> projects = projectService.findAllByUser(currentUser);
         model.addAttribute("projects", projects);
+        model.addAttribute("requestURI", request.getRequestURI());
         return "project/projects";
     }
 
@@ -61,6 +62,7 @@ public class ProjectController {
 
         model.addAttribute("project", new Project());
         model.addAttribute("user", currentUser);
+        model.addAttribute("requestURI", request.getRequestURI());
         return "project/create_project";
     }
 
@@ -91,6 +93,7 @@ public class ProjectController {
 
         Project project = projectService.findById(id);
         model.addAttribute("project", project);
+        model.addAttribute("requestURI", request.getRequestURI());
         return "project/edit_project";
     }
 

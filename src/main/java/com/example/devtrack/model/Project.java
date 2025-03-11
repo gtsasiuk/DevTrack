@@ -33,7 +33,7 @@ public class Project {
 
     @Column(name = "total_price", nullable = false)
     @Min(value = 0)
-    private BigDecimal totalPrice;
+    private BigDecimal totalPrice = BigDecimal.ZERO;
 
     @Column(name = "advance_payment")
     @Min(value = 0)

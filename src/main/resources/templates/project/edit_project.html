@@ -3,8 +3,11 @@
 <head>
   <title>Edit Project</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" th:href="@{/css/stylesheet.css}">
 </head>
 <body>
+<div th:replace="~{fragments/header}"></div>
 <div class="container mt-4">
   <h1>Edit Project</h1>
   <form th:action="@{/projects/edit/{id}(id=${project.id})}" th:object="${project}" method="post">
@@ -28,6 +31,7 @@
     <div class="mb-3">
       <label class="form-label">Advance Payment</label>
       <input type="number" class="form-control" th:field="*{advancePayment}" step="any" min="0">
+      <div id="advanceWarning" class="text-danger mt-1" style="display: none;">Advance payment cannot be greater than total price!</div>
     </div>
     <div class="mb-3">
       <label class="form-label">Deadline</label>
@@ -51,9 +55,36 @@
                 th:value="${status}" th:text="${status.getDisplayName()}"></option>
       </select>
     </div>
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button id="submitBtn" type="submit" class="btn btn-primary">Save</button>
     <a th:href="@{/projects}" class="btn btn-secondary">Cancel</a>
   </form>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const totalPriceInput = document.getElementById("totalPrice");
+      const advancePaymentInput = document.getElementById("advancePayment");
+      const advanceWarning = document.getElementById("advanceWarning");
+      const submitBtn = document.getElementById("submitBtn");
+
+      function validateAdvancePayment() {
+        const totalPrice = parseFloat(totalPriceInput.value) || 0;
+        const advancePayment = parseFloat(advancePaymentInput.value) || 0;
+
+        if (advancePayment > totalPrice) {
+          advanceWarning.style.display = "block";
+          submitBtn.disabled = true; // Блокуємо кнопку
+        } else {
+          advanceWarning.style.display = "none";
+          submitBtn.disabled = false; // Розблокуємо кнопку, якщо все гаразд
+        }
+      }
+
+      totalPriceInput.addEventListener("input", validateAdvancePayment);
+      advancePaymentInput.addEventListener("input", validateAdvancePayment);
+
+      validateAdvancePayment(); // Викликати функцію одразу при завантаженні сторінки
+    });
+  </script>
 </div>
 </body>
 </html>
