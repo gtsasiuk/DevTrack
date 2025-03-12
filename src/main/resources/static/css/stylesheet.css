@@ -126,3 +126,72 @@ body {
     border: none;
     transition: all 0.5s ease-in-out;
 }
+
+/** Home page **/
+.greetings-block {
+    background-image: url(../img/banner.jpg);
+    color: #000;
+    border-radius: 30px;
+    margin-top: 45px;
+    box-shadow: 0 5px 35px rgba(0, 0, 0, 0.25);
+}
+
+.hello {
+    display: block;
+    margin: 100px auto 60px auto;
+    text-align: center;
+}
+
+.hello h1 {
+    font-size: 40px;
+    font-weight: 900;
+}
+
+.hello h3 {
+    font-size: 34px;
+    font-weight: 800;
+    margin-top: 15px;
+    margin-bottom: 3px;
+}
+
+.hello p {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.hello span {
+    color: #3F8CFF;
+    font-weight: 900;
+}
+
+.btn-record {
+    background-color: #3F8CFF;
+    border-radius: 30px;
+    width: 140px;
+    padding: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-record a {
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.btn-record a:hover {
+    opacity: 0.8;
+    border: none;
+    transition: all 0.5s ease-in-out;
+}
+
+.btn-record i {
+    padding-left: 10px;
+    font-size: 16px;
+}
