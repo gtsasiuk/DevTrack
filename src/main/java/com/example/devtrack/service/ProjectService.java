@@ -4,6 +4,9 @@ import com.example.devtrack.model.Project;
 import com.example.devtrack.model.User;
 import com.example.devtrack.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +32,11 @@ public class ProjectService {
 
     public List<Project> findAllByUser(User user) {
         return projectRepository.findByUser(user);
+    }
+
+    public List<Project> sortByDeadlines(User user) {
+        Pageable pageable = PageRequest.of(0, 3, Sort.by(Sort.Order.asc("deadline")));
+        return projectRepository.findByUserAndStatus(user, Project.Status.ACTIVE, pageable);
     }
 
     public void update(Project project) {

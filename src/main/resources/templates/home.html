@@ -19,5 +19,54 @@
         </div>
     </div>
 </div>
+<div class="container nearest-deadlines">
+    <div class="title"><h2>Projects with nearest deadline</h2></div>
+    <div class="row">
+        <div th:each="project : ${projects}" class="col-md-4">
+            <div class="project-card">
+                <div class="project-card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <h5 class="project-card-title" th:text="${project.topic}"></h5>
+                            <h6 class="project-card-type" th:text="${project.projectType}"></h6>
+                        </div>
+                        <div class="col-6">
+                            <div class="project-status">
+                                <div class="project-status-item"><strong>Status <i class="fa-solid fa-tag"></i></strong></div>
+                                <div class="project-status-item" th:classappend="${project.status.name() == 'ACTIVE' ? 'status-active' :
+                                                     (project.status.name() == 'COMPLETED' ? 'status-completed' : 'status-canceled')}">
+                                    <i class="fa-solid" th:classappend="${project.status.name() == 'ACTIVE' ? 'fa-spinner' :
+                                                     (project.status.name() == 'COMPLETED' ? 'fa-check' : 'fa-xmark')}"></i>
+                                    <span th:text="${project.status.getDisplayName()}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="project-card-text">
+                        <strong>Client:</strong> <span th:text="${project.clientName}"></span><br>
+                        <strong>Deadline:</strong> <span th:text="${#temporals.format(project.deadline, 'dd.MM.yyyy')}"></span><br>
+                        <strong>Expected payment:</strong> <span th:text="${project.totalPrice - project.advancePayment}"></span> ₴<br>
+                    </div>
+                    <div class="project-card-price">
+                        <div class="row">
+                            <div class="col-8">
+                                <p><em>Total Price:</em> <span th:text="${project.totalPrice}"></span> ₴</p>
+                            </div>
+                            <div class="col-4">
+                                <div class="project-card-settings">
+                                    <div class="btn-project-edit"><a th:href="@{/projects/edit/{id}(id=${project.id})}"><i class="fa-solid fa-file-pen"></i></a></div>
+                                    <div class="btn-project-delete"><a th:href="@{/projects/delete/{id}(id=${project.id})}"><i class="fa-solid fa-trash"></i></a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container biggest-achievements">
+</div>
 </body>
 </html>

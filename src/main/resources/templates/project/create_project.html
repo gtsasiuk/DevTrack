@@ -34,7 +34,7 @@
         </div>
         <div class="mb-3">
             <label class="form-label">Deadline</label>
-            <input id="deadline" type="date" class="form-control"
+            <input name="deadline" type="date" class="form-control"
                    th:value="${project.deadline != null ? #temporals.format(project.deadline, 'yyyy-MM-dd') : ''}"
                    th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
         </div>

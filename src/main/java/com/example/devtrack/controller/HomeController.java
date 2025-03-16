@@ -1,5 +1,6 @@
 package com.example.devtrack.controller;
 
+import com.example.devtrack.model.Project;
 import com.example.devtrack.model.User;
 import com.example.devtrack.service.ProjectService;
 import com.example.devtrack.service.UserService;
@@ -9,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -37,7 +40,10 @@ public class HomeController {
         }
 
         String username = jwtUtil.extractUsername(token);
+        User currentUser = userService.findByUsername(username);
+        List<Project> projects = projectService.sortByDeadlines(currentUser);
 
+        model.addAttribute("projects", projects);
         model.addAttribute("requestURI", request.getRequestURI());
         model.addAttribute("username", username);
         return "home";

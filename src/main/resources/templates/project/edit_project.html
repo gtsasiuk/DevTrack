@@ -35,10 +35,9 @@
     </div>
     <div class="mb-3">
       <label class="form-label">Deadline</label>
-      <input type="date" class="form-control"
-             th:value="${project.deadline != null ? project.deadline : #temporals.format(project.deadline, 'yyyy-MM-dd')}"
-             th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
-             id="deadline">
+      <input name="deadline" type="date" class="form-control"
+             th:value="${project.deadline != null ? #temporals.format(project.deadline, 'yyyy-MM-dd') : ''}"
+             th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
     </div>
     <div class="mb-3">
       <label class="form-label">Project link(Website URL or GitHub)</label>

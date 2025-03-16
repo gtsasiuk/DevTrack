@@ -57,9 +57,9 @@ public class Project {
     private Status status;
 
     public enum Status {
-        ACTIVE("В розробці"),
-        COMPLETED("Завершено"),
-        CANCELLED("Скасовано");
+        ACTIVE("Active"),
+        COMPLETED("Completed"),
+        CANCELLED("Cancelled");
 
         private final String displayName;
 
