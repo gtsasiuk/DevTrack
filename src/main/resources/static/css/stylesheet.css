@@ -1,8 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
 
-body {
+html, body {
     font-family: "Nunito Sans", sans-serif;
     background-color: #F4F9FD;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
 }
 
 /** Header **/
@@ -127,6 +135,27 @@ body {
     transition: all 0.5s ease-in-out;
 }
 
+/** Footer **/
+.footer {
+    background-color: #fff;
+    color: #000;
+    border-radius: 30px;
+    min-height: 50px;
+    margin-top: auto;
+    margin-bottom: 10px;
+    box-shadow: 0 5px 35px rgba(0, 0, 0, 0.25);
+}
+
+.copyright {
+    line-height: 50px;
+}
+
+.copyright p {
+    margin: 0;
+    text-align: center;
+    font-size: 16px;
+}
+
 /** Home page **/
 .greetings-block {
     background-image: url(../img/banner.jpg);
@@ -173,6 +202,13 @@ body {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out;
+}
+
+.btn-record:hover {
+    transform: scale(1.05);
 }
 
 .btn-record a {
@@ -183,12 +219,14 @@ body {
     align-items: center;
     font-size: 18px;
     font-weight: 700;
+    transition: transform 0.2s ease-in-out;
 }
 
 .btn-record a:hover {
     opacity: 0.8;
     border: none;
     transition: all 0.5s ease-in-out;
+    transform: scale(1.05);
 }
 
 .btn-record i {
@@ -220,6 +258,13 @@ body {
     border-radius: 20px;
     box-shadow: 0 5px 35px rgba(0, 0, 0, 0.25);
     margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out;
+}
+
+.project-card:hover {
+    transform: scale(1.05);
 }
 
 .project-card-body {
@@ -323,7 +368,7 @@ body {
 }
 
 .btn-project-edit a {
-    color: #7D8592;
+    color: #3F8CFF;
     font-weight: 700;
     margin-right: 20px;
 }
@@ -341,4 +386,40 @@ body {
 .btn-project-delete a:hover {
     opacity: 0.8;
     transition: all 0.5s ease-in-out;
+}
+
+/** Achievement card **/
+.achievement-card {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out;
+}
+
+.achievement-card-body {
+    padding: 30px 25px 25px;
+}
+
+.achievement-card-body i {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.achievement-card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.achievement-card p {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+
+.achievement-card:hover {
+    transform: scale(1.05);
 }

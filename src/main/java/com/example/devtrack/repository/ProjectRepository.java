@@ -12,5 +12,6 @@ import java.util.List;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
     List<Project> findByUser(User user);
+    List<Project> findByUserAndStatus(User user, Project.Status status);
     List<Project> findByUserAndStatus(User user, Project.Status status, Pageable pageable);
 }

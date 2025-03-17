@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -42,8 +43,10 @@ public class HomeController {
         String username = jwtUtil.extractUsername(token);
         User currentUser = userService.findByUsername(username);
         List<Project> projects = projectService.sortByDeadlines(currentUser);
+        Map<String, Object> achievements = projectService.getUserAchievements(currentUser);
 
         model.addAttribute("projects", projects);
+        model.addAttribute("achievements", achievements);
         model.addAttribute("requestURI", request.getRequestURI());
         model.addAttribute("username", username);
         return "home";
