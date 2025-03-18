@@ -137,13 +137,10 @@ html, body {
 
 /** Footer **/
 .footer {
-    background-color: #fff;
     color: #000;
-    border-radius: 30px;
     min-height: 50px;
     margin-top: auto;
     margin-bottom: 10px;
-    box-shadow: 0 5px 35px rgba(0, 0, 0, 0.25);
 }
 
 .copyright {
@@ -154,6 +151,217 @@ html, body {
     margin: 0;
     text-align: center;
     font-size: 16px;
+}
+
+/** Login and Registration pages **/
+.auth-logo {
+    display: flex;
+    margin: 35px 0 5px 0;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.auth-logo img {
+    width: 65px;
+}
+
+.auth-logo h1 {
+    font-size: 52px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+.auth-logo strong {
+    margin-left: 20px;
+    color: #3F8CFF;
+    font-weight: 900;
+}
+
+.auth-body {
+    background-color: #fff;
+    color: #000;
+    border-radius: 30px;
+    display: block;
+    margin: 45px auto 0 auto;
+    padding: 20px;
+    box-shadow: 0 5px 35px rgba(0, 0, 0, 0.25);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 25px 20px 20px 20px;
+}
+
+.auth-form-item {
+    margin-bottom: 15px;
+}
+
+.auth-form-item label {
+    color: #7D8592;
+    font-size: 18px;
+    font-weight: 700;
+    margin-left: 10px;
+}
+
+.auth-form-item input {
+    color: #7D8592 !important;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 20px;
+    padding: 12px 15px;
+    border: 2px solid #D8E0F0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    outline: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.auth-form-item input::placeholder {
+    color: #7D8592;
+    font-weight: 500;
+    opacity: 1;
+}
+
+.auth-form-item input:focus {
+    border-color: #A8B3C9;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-container input {
+    flex: 1;
+    padding-right: 40px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-password img {
+    width: 24px;
+}
+
+.eye-cross {
+    position: absolute;
+    width: 28px;
+    height: 2px;
+    background: #7D8592;
+    transform: rotate(-45deg);
+    transition: opacity 0.2s;
+    opacity: 0;
+}
+
+.btn-auth-submit {
+    background-color: #3F8CFF;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 200px;
+    border: none;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 30px auto 0 auto;
+    padding: 10px 15px;
+    box-shadow: 0 4px 8px rgba(63, 140, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out;
+}
+
+.btn-auth-submit:hover {
+    transform: scale(1.05);
+}
+
+.btn-auth-submit i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    width: 18px;
+    margin-left: 10px;
+}
+
+.register {
+    display: block;
+    margin: 20px auto 20px auto;
+    text-align: center;
+}
+
+.register a {
+    color: #3F8CFF;
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.register a:hover {
+    text-decoration: underline 2px #3F8CFF;
+}
+
+.auth-form-item .auth-form-check-input {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #0A1629 !important;
+    background-color: #fff;
+    position: relative;
+    appearance: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.auth-form-item .auth-form-check-input:checked {
+    background-color: #fff;
+}
+
+.auth-form-item .auth-form-check-input::after {
+    content: "\2713";
+    font-size: 20px;
+    color: #3F8CFF;
+    font-weight: 800;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.auth-form-item .auth-form-check-input:checked::after {
+    opacity: 1;
+}
+
+.auth-form-item .auth-form-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 5px;
+}
+
+.auth-form-item .auth-form-check-label {
+    color: #0A1629;
+    font-size: 18px;
+    font-weight: 500;
+    align-content: center;
 }
 
 /** Home page **/

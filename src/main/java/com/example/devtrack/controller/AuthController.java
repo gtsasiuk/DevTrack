@@ -69,18 +69,19 @@ public class AuthController {
 
     @PostMapping("/auth/login")
     public String authenticateUser(@RequestParam String username, @RequestParam String password,
+                                   @RequestParam(value = "rememberMe", required = false) Boolean rememberMe,
                                    HttpServletResponse response, Model model) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             User user = userService.findByUsername(username);
-            String token = jwtUtil.generateToken(userDetails, user.getId());
+            Long expirationTime = (rememberMe != null && rememberMe) ? 30 * 24 * 60 * 60 * 1000L : jwtUtil.getExpiration();
 
-            System.out.println("User authenticated: " + user.getUsername());
+            String token = jwtUtil.generateToken(userDetails, user.getId(), expirationTime);
 
             Cookie jwtCookie = new Cookie("jwt", token);
             jwtCookie.setHttpOnly(true);
-            jwtCookie.setMaxAge(24 * 60 * 60);
+            jwtCookie.setMaxAge(rememberMe != null && rememberMe ? 30 * 24 * 60 * 60 : 24 * 60 * 60);
             jwtCookie.setPath("/");
             if (!"localhost".equalsIgnoreCase(response.getHeader("Host"))) {
                 jwtCookie.setSecure(true);
@@ -102,7 +103,9 @@ public class AuthController {
     }
 
     @PostMapping("/auth/registration")
-    public String registerUser(User user, Model model, HttpServletResponse response) {
+    public String registerUser(User user, Model model,
+                               HttpServletResponse response,
+                               @RequestParam(value = "rememberMe", required = false) Boolean rememberMe) {
         if (userService.existsByUsername(user.getUsername())) {
             model.addAttribute("error", "Username is already taken.");
             return "auth/registration";
@@ -122,11 +125,12 @@ public class AuthController {
         userService.add(user);
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
-        String token = jwtUtil.generateToken(userDetails, user.getId());
+        Long expirationTime = (rememberMe != null && rememberMe) ? 30 * 24 * 60 * 60 * 1000L : jwtUtil.getExpiration();
+        String token = jwtUtil.generateToken(userDetails, user.getId(), expirationTime);
 
         Cookie jwtCookie = new Cookie("jwt", token);
         jwtCookie.setHttpOnly(true);
-        jwtCookie.setMaxAge(24 * 60 * 60);
+        jwtCookie.setMaxAge(rememberMe != null && rememberMe ? 30 * 24 * 60 * 60 : 24 * 60 * 60);
         jwtCookie.setPath("/");
         if (!"localhost".equalsIgnoreCase(response.getHeader("Host"))) {
             jwtCookie.setSecure(true);
