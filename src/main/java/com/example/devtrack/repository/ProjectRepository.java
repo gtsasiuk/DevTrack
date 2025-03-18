@@ -3,7 +3,6 @@ package com.example.devtrack.repository;
 import com.example.devtrack.model.Project;
 import com.example.devtrack.model.User;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

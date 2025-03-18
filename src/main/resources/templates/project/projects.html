@@ -13,7 +13,8 @@
 <div class="container mt-4">
     <div class="title"><h2>Your projects</h2></div>
     <div class="row">
-        <div th:each="project : ${projects}" class="col-md-4">
+        <div th:if="${projects != null and not #lists.isEmpty(projects)}">
+            <div th:each="project : ${projects}" class="col-md-4">
             <div class="project-card">
                 <div class="project-card-body">
                     <div class="row">
@@ -54,6 +55,11 @@
                     </div>
                 </div>
             </div>
+        </div>
+        </div>
+        <div th:if="${projects == null or #lists.isEmpty(projects)}" class="no-projects">
+            <img th:src="@{/img/no_projects.svg}" alt="No projects available" class="img-fluid">
+            <p>There are no projects yet<br>Let's add them</p>
         </div>
     </div>
 </div>

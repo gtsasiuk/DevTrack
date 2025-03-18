@@ -56,7 +56,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/auth/login", "/auth/registration", "/static/css/**", "/js/**").permitAll()
+                        .requestMatchers("/", "/auth/login", "/auth/registration", "/css/**", "/js/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/home", "/projects", "/projects/**").hasAnyRole("USER", "ADMIN")
                         .anyRequest().authenticated())

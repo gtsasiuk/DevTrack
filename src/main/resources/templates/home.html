@@ -22,7 +22,8 @@
 <div class="container nearest-deadlines">
     <div class="title"><h2>Projects with nearest deadline</h2></div>
     <div class="row">
-        <div th:each="project : ${projects}" class="col-md-4">
+        <div th:if="${projects != null and not #lists.isEmpty(projects)}">
+            <div th:each="project : ${projects}" class="col-md-4">
             <div class="project-card">
                 <div class="project-card-body">
                     <div class="row">
@@ -63,6 +64,11 @@
                     </div>
                 </div>
             </div>
+            </div>
+        </div>
+        <div th:if="${projects == null or #lists.isEmpty(projects)}" class="no-projects">
+            <img th:src="@{/img/no_projects.svg}" alt="No projects available" class="img-fluid">
+            <p>There are no projects with a deadline of 3 days or less<br>You don't need to worry about</p>
         </div>
     </div>
 </div>
@@ -115,9 +121,9 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="achievement-card" style="border-left: 5px solid #dc3545;">
+            <div class="achievement-card" style="border-left: 5px solid #E63946;">
                 <div class="achievement-card-body">
-                    <i class="fa-solid fa-percent" style="color: #dc3545;"></i>
+                    <i class="fa-solid fa-percent" style="color: #E63946;"></i>
                     <h3>Success Rate</h3>
                     <p><strong><span th:text="${achievements.successRate}"></span>%</strong></p>
                 </div>

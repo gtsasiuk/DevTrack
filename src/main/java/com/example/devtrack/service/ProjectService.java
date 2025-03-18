@@ -11,10 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -66,7 +65,11 @@ public class ProjectService {
                 .count();
 
         long totalProjects = projectRepository.findByUser(user).size();
+
         double successRate = totalProjects > 0 ? (double) completedCount / totalProjects * 100 : 0;
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+        DecimalFormat df = new DecimalFormat("#.##", symbols);
+        String formattedRate = df.format(successRate);
 
         Map<String, Object> achievements = new HashMap<>();
         achievements.put("totalEarnings", totalEarnings);
@@ -74,7 +77,7 @@ public class ProjectService {
         achievements.put("avgProjectCost", avgProjectCost);
         achievements.put("maxProjectCost", maxProjectCost);
         achievements.put("uniqueClients", uniqueClients);
-        achievements.put("successRate", successRate);
+        achievements.put("successRate", formattedRate);
 
         return achievements;
     }
