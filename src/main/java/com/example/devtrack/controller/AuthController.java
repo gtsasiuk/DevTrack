@@ -87,6 +87,7 @@ public class AuthController {
                 jwtCookie.setSecure(true);
             }
             response.addCookie(jwtCookie);
+            model.addAttribute("success", true);
 
             return "redirect:/home";
         } catch (Exception e) {
