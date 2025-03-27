@@ -23,8 +23,7 @@
 <div class="container nearest-deadlines">
     <div class="title"><h2>Projects with nearest deadline</h2></div>
     <div class="row">
-        <div th:if="${projects != null and not #lists.isEmpty(projects)}">
-            <div th:each="project : ${projects}" class="col-md-4">
+        <div th:if="${projects != null and not #lists.isEmpty(projects)}" th:each="project : ${projects}" class="col-md-4">
             <div class="project-card">
                 <div class="project-card-body">
                     <div class="row">
@@ -64,7 +63,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
         </div>
         <div th:if="${projects == null or #lists.isEmpty(projects)}" class="no-projects">
