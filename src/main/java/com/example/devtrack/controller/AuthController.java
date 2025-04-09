@@ -92,7 +92,11 @@ public class AuthController {
             return "redirect:/home";
         } catch (Exception e) {
             System.err.println("Authentication error: " + e.getMessage());
-            model.addAttribute("error", "Invalid username or password.");
+            if (!userService.existsByUsername(username)) {
+                model.addAttribute("usernameError", "Username not found.");
+            } else {
+                model.addAttribute("passwordError", "Incorrect password.");
+            }
             return "auth/login";
         }
     }
@@ -106,38 +110,59 @@ public class AuthController {
     @PostMapping("/auth/registration")
     public String registerUser(User user, Model model,
                                HttpServletResponse response,
+                               @RequestParam String confirmPassword,
                                @RequestParam(value = "rememberMe", required = false) Boolean rememberMe) {
-        if (userService.existsByUsername(user.getUsername())) {
-            model.addAttribute("error", "Username is already taken.");
+        try {
+            String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).{8,}$";
+            if (!user.getPassword().matches(passwordPattern)) {
+                model.addAttribute("passwordError", "Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one digit, and one special character.");
+            }
+
+            // Перевірка на збіг паролів
+            if (!user.getPassword().equals(confirmPassword)) {
+                model.addAttribute("confirmPasswordError", "Passwords do not match.");
+            }
+
+            // Перевірка на унікальність імені користувача та емейлу
+            if (userService.existsByUsername(user.getUsername())) {
+                model.addAttribute("usernameError", "Username is already taken.");
+            }
+            if (userService.existsByEmail(user.getEmail())) {
+                model.addAttribute("emailError", "Email is already in use.");
+            }
+
+            // Якщо є помилки, повертаємо форму реєстрації
+            if (model.containsAttribute("passwordError") || model.containsAttribute("confirmPasswordError") ||
+                    model.containsAttribute("usernameError") || model.containsAttribute("emailError")) {
+                return "auth/registration";
+            }
+
+            String rawPassword = user.getPassword();
+            user.setPassword(passwordEncoder.encode(rawPassword));
+
+            Role userRole = roleService.findByName("ROLE_USER");
+            user.getRoles().add(userRole);
+            user.setEnabled(true);
+
+            userService.add(user);
+
+            UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+            Long expirationTime = (rememberMe != null && rememberMe) ? 30 * 24 * 60 * 60 * 1000L : jwtUtil.getExpiration();
+            String token = jwtUtil.generateToken(userDetails, user.getId(), expirationTime);
+
+            Cookie jwtCookie = new Cookie("jwt", token);
+            jwtCookie.setHttpOnly(true);
+            jwtCookie.setMaxAge(rememberMe != null && rememberMe ? 30 * 24 * 60 * 60 : 24 * 60 * 60);
+            jwtCookie.setPath("/");
+            if (!"localhost".equalsIgnoreCase(response.getHeader("Host"))) {
+                jwtCookie.setSecure(true);
+            }
+            response.addCookie(jwtCookie);
+
+            return "redirect:/home";
+        } catch (Exception e) {
+            System.err.println("Authentication error: " + e.getMessage());
             return "auth/registration";
         }
-        if (userService.existsByEmail(user.getEmail())) {
-            model.addAttribute("error", "Email is already in use.");
-            return "auth/registration";
-        }
-
-        String rawPassword = user.getPassword();
-        user.setPassword(passwordEncoder.encode(rawPassword));
-
-        Role userRole = roleService.findByName("ROLE_USER");
-        user.getRoles().add(userRole);
-        user.setEnabled(true);
-
-        userService.add(user);
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
-        Long expirationTime = (rememberMe != null && rememberMe) ? 30 * 24 * 60 * 60 * 1000L : jwtUtil.getExpiration();
-        String token = jwtUtil.generateToken(userDetails, user.getId(), expirationTime);
-
-        Cookie jwtCookie = new Cookie("jwt", token);
-        jwtCookie.setHttpOnly(true);
-        jwtCookie.setMaxAge(rememberMe != null && rememberMe ? 30 * 24 * 60 * 60 : 24 * 60 * 60);
-        jwtCookie.setPath("/");
-        if (!"localhost".equalsIgnoreCase(response.getHeader("Host"))) {
-            jwtCookie.setSecure(true);
-        }
-        response.addCookie(jwtCookie);
-
-        return "redirect:/home";
     }
 }

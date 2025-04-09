@@ -13,3 +13,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+/** Invalid error input change **/
+document.addEventListener("DOMContentLoaded", function () {
+    const inputs = document.querySelectorAll(".form-control");
+
+    inputs.forEach(input => {
+        input.addEventListener("input", () => {
+            if (input.classList.contains("is-invalid")) {
+                input.classList.remove("is-invalid");
+
+                const feedback = input.closest(".auth-form-item").querySelector(".invalid-feedback");
+                if (feedback) {
+                    feedback.style.display = "none";
+                }
+            }
+        });
+    });
+});

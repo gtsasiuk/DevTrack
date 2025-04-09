@@ -364,6 +364,28 @@ html, body {
     align-content: center;
 }
 
+.invalid-feedback {
+    color: #F65160;
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 10px;
+    padding-left: 15px;
+    display: block;
+    transition: opacity 0.3s ease;
+}
+
+.is-invalid {
+    border-color: #F65160 !important;
+    box-shadow: 0 4px 8px rgba(243, 19, 2, 0.25) !important;
+    color: #F65160 !important;
+    background-image: none !important;
+}
+
+.is-invalid::placeholder {
+    color: #F65160 !important;
+    opacity: 0.7;
+}
+
 /** Home page **/
 .greetings-block {
     background-image: url(../img/banner.jpg);
