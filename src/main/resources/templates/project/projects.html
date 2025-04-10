@@ -9,8 +9,14 @@
 </head>
 <body>
 <div th:replace="~{fragments/header}"></div>
-<div class="container mt-4">
+<div class="container">
     <div class="title"><h2>Your projects</h2></div>
+    <div class="row filter-container">
+        <div class="col-6">
+            <div class="btn-create"><a th:href="@{/projects/create}"><i class="fa-solid fa-plus"></i> Add a project</a></div>
+        </div>
+        <div class="col-6"></div>
+    </div>
     <div class="row">
         <div th:if="${projects != null and not #lists.isEmpty(projects)}" th:each="project : ${projects}" class="col-md-4">
         <div class="project-card">

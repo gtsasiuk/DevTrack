@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>DevTrack - Edit projects</title>
+  <title>DevTrack - Edit project</title>
   <link rel="icon" type="image/svg+xml" th:href="@{/img/logo.svg}">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -9,56 +9,59 @@
 </head>
 <body>
 <div th:replace="~{fragments/header}"></div>
-<div class="container mt-4">
-  <h1>Edit Project</h1>
-  <form th:action="@{/projects/edit/{id}(id=${project.id})}" th:object="${project}" method="post">
-    <input type="hidden" th:field="*{id}" />
-    <div class="mb-3">
-      <label class="form-label">Project Type</label>
-      <input type="text" class="form-control" th:field="*{projectType}" required>
+<div class="container">
+  <div class="row">
+    <div class="project-body col-8">
+      <div class="row">
+        <div class="project-title-body">
+          <div class="col-10"><h2 class="project-form-title">Edit project</h2></div>
+          <div class="col-2"><a th:href="@{/projects}" class="btn btn-cancel"><i class="fa-solid fa-xmark"></i></a></div>
+        </div>
+      </div>
+      <div class="project-form">
+        <form id="add-project-form" th:action="@{/projects/create}" th:object="${project}" method="post">
+          <div class="project-form-item">
+            <label class="form-label">Project type</label>
+            <input type="text" class="form-control" placeholder="Enter your project type" th:field="*{projectType}" required>
+          </div>
+          <div class="project-form-item">
+            <label class="form-label">Topic</label>
+            <input type="text" class="form-control" placeholder="Enter your project topic" th:field="*{topic}" required>
+          </div>
+          <div class="project-form-item">
+            <label class="form-label">Client name</label>
+            <input type="text" class="form-control" placeholder="Enter your client name" th:field="*{clientName}" required>
+          </div>
+          <div class="project-form-item">
+            <label class="form-label">Total price</label>
+            <input type="number" class="form-control" th:field="*{totalPrice}" step="any" min="0" required>
+          </div>
+          <div class="project-form-item">
+            <label class="form-label">Advance payment</label>
+            <input type="number" class="form-control" th:field="*{advancePayment}" step="any" min="0">
+            <div id="advanceWarning" class="text-danger mt-1" style="display: none;">Advance payment cannot be greater than total price!</div>
+          </div>
+          <div class="project-form-item">
+            <label class="form-label">Deadline</label>
+            <input name="deadline" type="date" class="form-control"
+                   th:value="${project.deadline != null ? #temporals.format(project.deadline, 'yyyy-MM-dd') : ''}"
+                   th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
+          </div>
+          <div class="project-form-item">
+            <label class="form-label">Project link(Website URL or GitHub)</label>
+            <input type="text" class="form-control" placeholder="Enter your project link" th:field="*{projectLink}">
+          </div>
+          <div class="project-form-item project-description">
+            <label class="form-label">Project description</label>
+            <textarea class="form-control" placeholder="Add some description of the project" th:field="*{description}"></textarea>
+          </div>
+          <div class="project-form-item">
+            <button type="submit" class="btn-project-submit">Edit Project <i class="fa-solid fa-pen"></i></button>
+          </div>
+        </form>
+      </div>
     </div>
-    <div class="mb-3">
-      <label class="form-label">Topic</label>
-      <input type="text" class="form-control" th:field="*{topic}" required>
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Client Name</label>
-      <input type="text" class="form-control" th:field="*{clientName}" required>
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Total Price</label>
-      <input type="number" class="form-control" th:field="*{totalPrice}" step="any" min="0" required>
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Advance Payment</label>
-      <input type="number" class="form-control" th:field="*{advancePayment}" step="any" min="0">
-      <div id="advanceWarning" class="text-danger mt-1" style="display: none;">Advance payment cannot be greater than total price!</div>
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Deadline</label>
-      <input name="deadline" type="date" class="form-control"
-             th:value="${project.deadline != null ? #temporals.format(project.deadline, 'yyyy-MM-dd') : ''}"
-             th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Project link(Website URL or GitHub)</label>
-      <input type="text" class="form-control" th:field="*{projectLink}">
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Project description</label>
-      <input type="text" class="form-control" th:field="*{description}">
-    </div>
-    <div class="mb-3">
-      <label class="form-label">Status</label>
-      <select class="form-control" th:field="*{status}">
-        <option th:each="status : ${T(com.example.devtrack.model.Project.Status).values()}"
-                th:value="${status}" th:text="${status.getDisplayName()}"></option>
-      </select>
-    </div>
-    <button id="submitBtn" type="submit" class="btn btn-primary">Save</button>
-    <a th:href="@{/projects}" class="btn btn-secondary">Cancel</a>
-  </form>
-
+  </div>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const totalPriceInput = document.getElementById("totalPrice");
@@ -86,5 +89,6 @@
     });
   </script>
 </div>
+<div th:replace="~{fragments/footer}"></div>
 </body>
 </html>
