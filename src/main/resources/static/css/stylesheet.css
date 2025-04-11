@@ -379,6 +379,7 @@ html, body {
     box-shadow: 0 4px 8px rgba(243, 19, 2, 0.25) !important;
     color: #F65160 !important;
     background-image: none !important;
+    padding-right: 15px !important;
 }
 
 .is-invalid::placeholder {
@@ -580,6 +581,29 @@ html, body {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
+.project-form-item select {
+    color: #7D8592 !important;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 20px;
+    padding: 12px 15px;
+    border: 2px solid #D8E0F0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    outline: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.project-form-item select::placeholder {
+    color: #7D8592;
+    font-weight: 500;
+    opacity: 1;
+}
+
+.project-form-item select:focus {
+    border-color: #A8B3C9;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
 .btn-project-submit {
     background-color: #3F8CFF;
     color: #fff;
@@ -733,8 +757,17 @@ html, body {
     margin-right: 3px;
 }
 
-.status-canceled {
+.status-expired {
     color: #F65160;
+    font-weight: 700;
+}
+
+.status-expired > i {
+    margin-right: 3px;
+}
+
+.status-canceled {
+    color: #FFBD21;
     font-weight: 700;
 }
 

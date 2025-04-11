@@ -59,7 +59,8 @@ public class Project {
     public enum Status {
         ACTIVE("Active"),
         COMPLETED("Completed"),
-        CANCELLED("Cancelled");
+        CANCELLED("Cancelled"),
+        EXPIRED("Expired");
 
         private final String displayName;
 

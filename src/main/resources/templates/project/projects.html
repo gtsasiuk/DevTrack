@@ -29,10 +29,14 @@
                     <div class="col-6">
                         <div class="project-status">
                             <div class="project-status-item"><strong>Status <i class="fa-solid fa-tag"></i></strong></div>
-                            <div class="project-status-item" th:classappend="${project.status.name() == 'ACTIVE' ? 'status-active' :
-                                                     (project.status.name() == 'COMPLETED' ? 'status-completed' : 'status-canceled')}">
-                                <i class="fa-solid" th:classappend="${project.status.name() == 'ACTIVE' ? 'fa-spinner' :
-                                                     (project.status.name() == 'COMPLETED' ? 'fa-check' : 'fa-xmark')}"></i>
+                            <div class="project-status-item"
+                                 th:classappend="${project.status.name() == 'ACTIVE' ? 'status-active' :
+                                                 (project.status.name() == 'COMPLETED' ? 'status-completed' :
+                                                 (project.status.name() == 'EXPIRED' ? 'status-expired' : 'status-canceled'))}">
+                                <i class="fa-solid"
+                                   th:classappend="${project.status.name() == 'ACTIVE' ? 'fa-spinner' :
+                                                     (project.status.name() == 'COMPLETED' ? 'fa-check' :
+                                                     (project.status.name() == 'EXPIRED' ? 'fa-hourglass-end' : 'fa-xmark'))}"></i>
                                 <span th:text="${project.status.getDisplayName()}"></span>
                             </div>
                         </div>

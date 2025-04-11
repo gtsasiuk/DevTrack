@@ -30,6 +30,6 @@ CREATE TABLE projects (
                           project_link VARCHAR(255),
                           description VARCHAR(255),
                           user_id BIGINT NOT NULL,
-                          status ENUM('ACTIVE', 'COMPLETED', 'CANCELLED') DEFAULT 'ACTIVE',
+                          status ENUM('ACTIVE', 'COMPLETED', 'CANCELLED', 'EXPIRED') DEFAULT 'ACTIVE',
                           FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );

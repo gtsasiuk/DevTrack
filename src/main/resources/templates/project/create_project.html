@@ -34,12 +34,12 @@
                     </div>
                     <div class="project-form-item">
                         <label class="form-label">Total price</label>
-                        <input type="number" class="form-control" th:field="*{totalPrice}" step="any" min="0" required>
+                        <input id="totalPrice" type="number" class="form-control" th:field="*{totalPrice}" step="any" min="0" required>
                     </div>
                     <div class="project-form-item">
                         <label class="form-label">Advance payment</label>
-                        <input type="number" class="form-control" th:field="*{advancePayment}" step="any" min="0">
-                        <div id="advanceWarning" class="text-danger mt-1" style="display: none;">Advance payment cannot be greater than total price!</div>
+                        <input id="advancePayment" type="number" class="form-control" th:field="*{advancePayment}" step="any" min="0">
+                        <div id="advanceWarning" class="invalid-feedback" style="display: none;">Advance payment cannot be greater than total price!</div>
                     </div>
                     <div class="project-form-item">
                         <label class="form-label">Deadline</label>
@@ -62,33 +62,8 @@
             </div>
         </div>
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const totalPriceInput = document.getElementById("totalPrice");
-            const advancePaymentInput = document.getElementById("advancePayment");
-            const advanceWarning = document.getElementById("advanceWarning");
-            const submitBtn = document.getElementById("submitBtn");
-
-            function validateAdvancePayment() {
-                const totalPrice = parseFloat(totalPriceInput.value) || 0;
-                const advancePayment = parseFloat(advancePaymentInput.value) || 0;
-
-                if (advancePayment > totalPrice) {
-                    advanceWarning.style.display = "block";
-                    submitBtn.disabled = true; // Блокуємо кнопку
-                } else {
-                    advanceWarning.style.display = "none";
-                    submitBtn.disabled = false; // Розблокуємо кнопку, якщо все гаразд
-                }
-            }
-
-            totalPriceInput.addEventListener("input", validateAdvancePayment);
-            advancePaymentInput.addEventListener("input", validateAdvancePayment);
-
-            validateAdvancePayment(); // Викликати функцію одразу при завантаженні сторінки
-        });
-    </script>
 </div>
 <div th:replace="~{fragments/footer}"></div>
+<script th:src="@{/js/project.js}"></script>
 </body>
 </html>

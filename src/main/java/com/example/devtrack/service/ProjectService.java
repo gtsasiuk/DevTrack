@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -34,12 +35,27 @@ public class ProjectService {
     }
 
     public List<Project> findAllByUser(User user) {
+        markExpiredProjects(user);
         return projectRepository.findByUser(user);
     }
 
     public List<Project> sortByDeadlines(User user) {
+        markExpiredProjects(user);
         Pageable pageable = PageRequest.of(0, 3, Sort.by(Sort.Order.asc("deadline")));
         return projectRepository.findByUserAndStatus(user, Project.Status.ACTIVE, pageable);
+    }
+
+    public void markExpiredProjects(User user) {
+        List<Project> activeProjects = projectRepository.findByUserAndStatus(user, Project.Status.ACTIVE);
+
+        LocalDate today = LocalDate.now();
+
+        for (Project project : activeProjects) {
+            if (project.getDeadline() != null && project.getDeadline().isBefore(today)) {
+                project.setStatus(Project.Status.EXPIRED);
+                projectRepository.save(project);
+            }
+        }
     }
 
     public Map<String, Object> getUserAchievements(User user) {
