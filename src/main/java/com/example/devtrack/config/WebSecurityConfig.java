@@ -60,7 +60,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/", "/auth/login", "/auth/registration", "/css/**", "/img/**","/js/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/home", "/projects", "/projects/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/home", "/projects", "/projects/**", "/profile", "/profile/**").hasAnyRole("USER", "ADMIN")
                         .anyRequest().authenticated())
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .formLogin(form -> form.disable())
