@@ -39,10 +39,19 @@ public class ProjectService {
         return projectRepository.findByUser(user);
     }
 
+    public List<Project> findByStatus(User user, Project.Status status) {
+        markExpiredProjects(user);
+        return projectRepository.findByUserAndStatus(user, status);
+    }
+
     public List<Project> sortByDeadlines(User user) {
         markExpiredProjects(user);
         Pageable pageable = PageRequest.of(0, 3, Sort.by(Sort.Order.asc("deadline")));
         return projectRepository.findByUserAndStatus(user, Project.Status.ACTIVE, pageable);
+    }
+
+    public List<Project> findAllSorted(User user, Sort sort) {
+        return projectRepository.findByUser(user, sort);
     }
 
     public void markExpiredProjects(User user) {

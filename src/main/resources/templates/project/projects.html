@@ -15,7 +15,24 @@
         <div class="col-6">
             <div class="btn-create"><a th:href="@{/projects/create}"><i class="fa-solid fa-plus"></i> Add a project</a></div>
         </div>
-        <div class="col-6"></div>
+        <div class="col-6 filter-body ">
+            <form method="get" th:action="@{/projects}" class="form-inline">
+                <div class="sort-group">
+                    <label for="sort">Sort by:</label>
+                    <select name="sort" id="sort" class="form-select" onchange="this.form.submit()">
+                        <option value="">No sorting</option>
+                        <option value="deadlineAsc" th:selected="${sort == 'deadlineAsc'}">Deadline ↑</option>
+                        <option value="deadlineDesc" th:selected="${sort == 'deadlineDesc'}">Deadline ↓</option>
+                        <option value="priceAsc" th:selected="${sort == 'priceAsc'}">Price ↑</option>
+                        <option value="priceDesc" th:selected="${sort == 'priceDesc'}">Price ↓</option>
+                        <option value="statusActive" th:selected="${sort == 'statusActive'}">Status: Active</option>
+                        <option value="statusCompleted" th:selected="${sort == 'statusCompleted'}">Status: Completed</option>
+                        <option value="statusExpired" th:selected="${sort == 'statusExpired'}">Status: Expired</option>
+                        <option value="statusCanceled" th:selected="${sort == 'statusCanceled'}">Status: Canceled</option>
+                    </select>
+                </div>
+            </form>
+        </div>
     </div>
     <div class="row">
         <div th:if="${projects != null and not #lists.isEmpty(projects)}" th:each="project : ${projects}" class="col-md-4">

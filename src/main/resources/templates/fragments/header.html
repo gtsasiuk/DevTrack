@@ -22,7 +22,7 @@
                         </li>
                         <li class="nav-list-item">
                             <a th:href="@{/profile}"
-                               th:classappend="${requestURI == '/profile' ? 'nav-list-link--active' : ''}"
+                               th:classappend="${requestURI.startsWith('/profile')? 'nav-list-link--active' : ''}"
                                class="nav-list-link">Profile</a>
                         </li>
                         <li class="nav-list-item btn-logout"><a th:href="@{/auth/login?logout=true}" class="nav-list-link"><i class="fa-solid fa-door-open"></i></a></li>

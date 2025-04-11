@@ -7,6 +7,7 @@ import com.example.devtrack.service.UserService;
 import com.example.devtrack.util.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,7 @@ public class ProjectController {
     }
 
     @GetMapping
-    public String getAllProjects(Model model, HttpServletRequest request) {
+    public String getAllProjects(@RequestParam(required = false) String sort, Model model, HttpServletRequest request) {
         String token = getJwtToken(request);
 
         if (token == null || !jwtUtil.isValidToken(token)) {
@@ -42,8 +43,23 @@ public class ProjectController {
 
         String username = jwtUtil.extractUsername(token);
         User currentUser = userService.findByUsername(username);
-        List<Project> projects = projectService.findAllByUser(currentUser);
+        List<Project> projects;
+
+        switch (sort != null ? sort : "") {
+            case "deadlineAsc" -> projects = projectService.findAllSorted(currentUser, Sort.by("deadline").ascending());
+            case "deadlineDesc" -> projects = projectService.findAllSorted(currentUser, Sort.by("deadline").descending());
+            case "priceAsc" -> projects = projectService.findAllSorted(currentUser, Sort.by("totalPrice").ascending());
+            case "priceDesc" -> projects = projectService.findAllSorted(currentUser, Sort.by("totalPrice").descending());
+            case "status" -> projects = projectService.findAllSorted(currentUser, Sort.by("status"));
+            case "statusActive" -> projects = projectService.findByStatus(currentUser, Project.Status.ACTIVE);
+            case "statusCompleted" -> projects = projectService.findByStatus(currentUser, Project.Status.COMPLETED);
+            case "statusExpired" -> projects = projectService.findByStatus(currentUser, Project.Status.EXPIRED);
+            case "statusCanceled" -> projects = projectService.findByStatus(currentUser, Project.Status.CANCELLED);
+            default -> projects = projectService.findAllByUser(currentUser);
+        }
+
         model.addAttribute("projects", projects);
+        model.addAttribute("sort", sort);
         model.addAttribute("requestURI", request.getRequestURI());
         return "project/projects";
     }

@@ -642,6 +642,49 @@ html, body {
     margin-bottom: 30px;
 }
 
+.filter-body {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    flex-direction: row;
+}
+
+.sort-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sort-group label {
+    white-space: nowrap;
+    font-size: 22px;
+    font-weight: 700;
+    margin-right: 15px;
+}
+
+.filter-body select {
+    border: 0;
+    border-radius: 25px;
+    background-color: #fff;
+    box-shadow: 0 5px 35px rgba(0, 0, 0, 0.25);
+    padding: 10px 20px;
+    font-size: 24px;
+    font-weight: 700;
+    min-width: 280px;
+}
+
+.filter-body option {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+    background-color: #fff;
+    padding: 10px;
+}
+
+.filter-body select:focus {
+    box-shadow: 5px 15px 35px rgba(0, 0, 0, 0.25);
+}
+
 .btn-create {
     background-color: #3F8CFF;
     border-radius: 30px;
