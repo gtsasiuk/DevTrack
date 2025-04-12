@@ -925,3 +925,123 @@ html, body {
 .achievement-card:hover {
     transform: scale(1.05);
 }
+
+/** Profile page **/
+.profile-body {
+    background-color: #fff;
+    color: #000;
+    border-radius: 30px;
+    display: block;
+    margin: 10px auto 20px auto;
+    padding: 20px;
+    box-shadow: 0 5px 35px rgba(0, 0, 0, 0.25);
+}
+
+.profile-body hr {
+    display: block;
+    background-color: #b1b2bd;
+    width: 95%;
+    height: 2px;
+    margin: 0 auto 15px auto;
+}
+
+.profile-info {
+    padding: 20px 20px 10px;
+}
+
+.profile-item h4 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.profile-item p {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.profile-title-body {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+
+}
+
+.profile-title {
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 0;
+}
+
+.btn-change-body {
+    display: flex;
+    justify-content: end;
+}
+
+.btn-change-info {
+    background-color: #F4F9FD;
+    color: #0A1629;
+    font-weight: 700;
+    font-size: 24px;
+    border-radius: 15px;
+    justify-content: end;
+}
+
+.btn-change-info:hover {
+    background-color: #E6EDF5;
+}
+
+.change-password a {
+    text-decoration: none;
+        color: #3F8CFF;
+    font-weight: 700;
+    margin-left: 10px;
+}
+
+.change-password a:hover {
+    text-decoration: none;
+    opacity: 0.8;
+    color: #245DB2;
+    transition: all 0.3s ease-in-out;
+}
+
+.stats-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 0;
+}
+
+.stats-body {
+    padding-right: 0 !important;
+}
+
+.stats-list {
+    background-color: #E6EDF5;
+    margin-top: 20px;
+    margin-left: 5px;
+    padding: 25px 25px 20px;
+    border-radius: 15px;
+}
+
+.stats-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 5px;
+    border-bottom: 1px solid #0A1629;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.stats-list-item:last-child {
+    border-bottom: none;
+}
+
+.stats-value {
+    color: #3F8CFF;
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 900;
+}

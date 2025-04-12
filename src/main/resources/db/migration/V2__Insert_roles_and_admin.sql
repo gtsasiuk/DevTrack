@@ -1,4 +1,4 @@
 INSERT INTO roles (name) VALUES ('ROLE_USER'), ('ROLE_ADMIN');
 
-INSERT INTO users (username, email, password_hash, enabled)
-VALUES ('crm admin', 'crmadmin@gmail.com', '$2a$10$BYoR0xrPY5dPt4nWSvgV0e7ZJqkoxajYe6HmG5WKMEEoBC20nDBiC', 1);
+INSERT INTO users (username, email, password_hash, creation_date, enabled)
+VALUES ('crm admin', 'crmadmin@gmail.com', '$2a$10$BYoR0xrPY5dPt4nWSvgV0e7ZJqkoxajYe6HmG5WKMEEoBC20nDBiC', NOW(),1);

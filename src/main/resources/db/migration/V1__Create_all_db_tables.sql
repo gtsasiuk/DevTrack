@@ -8,6 +8,7 @@ CREATE TABLE users (
                        username VARCHAR(50) NOT NULL UNIQUE,
                        email VARCHAR(100) NOT NULL UNIQUE,
                        password_hash VARCHAR(255) NOT NULL,
+                       creation_date DATE NOT NULL,
                        enabled TINYINT(1) DEFAULT FALSE
 );
 
@@ -26,6 +27,7 @@ CREATE TABLE projects (
                           client_name VARCHAR(100) NOT NULL,
                           total_price DECIMAL(10, 2) NOT NULL,
                           advance_payment DECIMAL(10, 2),
+                          creation_date DATE NOT NULL,
                           deadline DATE NOT NULL,
                           project_link VARCHAR(255),
                           description VARCHAR(255),

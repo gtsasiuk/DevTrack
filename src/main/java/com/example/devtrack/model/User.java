@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,10 @@ public class User {
 
     @Column(name = "password_hash")
     private String password;
+
+    @Column(name = "creation_date", updatable = false)
+    @CreationTimestamp
+    private LocalDateTime creationDate;
 
     @Column(name = "enabled")
     private boolean enabled = false;

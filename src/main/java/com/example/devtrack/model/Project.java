@@ -6,9 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "projects")
@@ -38,6 +40,10 @@ public class Project {
     @Column(name = "advance_payment")
     @Min(value = 0)
     private BigDecimal advancePayment = BigDecimal.ZERO;
+
+    @Column(name = "creation_date", updatable = false)
+    @CreationTimestamp
+    private LocalDateTime creationDate;
 
     @Column(name = "deadline")
     private LocalDate deadline = LocalDate.now();

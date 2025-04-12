@@ -1,6 +1,7 @@
 package com.example.devtrack.controller;
 
 import com.example.devtrack.model.User;
+import com.example.devtrack.service.ProjectService;
 import com.example.devtrack.service.UserService;
 import com.example.devtrack.util.JwtUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,10 +11,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Map;
+
 @Controller
 @RequestMapping("/profile")
 @RequiredArgsConstructor
 public class ProfileController {
+    private final ProjectService projectService;
     private final UserService userService;
     private final JwtUtil jwtUtil;
 
@@ -40,6 +44,8 @@ public class ProfileController {
         User currentUser = userService.findByUsername(username);
         model.addAttribute("user", currentUser);
         model.addAttribute("requestURI",request.getRequestURI());
+        Map<String, Object> stats = projectService.getFullProfileStatistics(currentUser);
+        model.addAttribute("stats", stats);
         return "profile/profile";
     }
 }

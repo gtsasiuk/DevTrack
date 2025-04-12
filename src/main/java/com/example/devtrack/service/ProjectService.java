@@ -14,6 +14,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDateTime;
 import java.util.*;
 
 @Service
@@ -51,6 +52,7 @@ public class ProjectService {
     }
 
     public List<Project> findAllSorted(User user, Sort sort) {
+        markExpiredProjects(user);
         return projectRepository.findByUser(user, sort);
     }
 
@@ -105,6 +107,95 @@ public class ProjectService {
         achievements.put("successRate", formattedRate);
 
         return achievements;
+    }
+
+    public Map<String, Object> getFullProfileStatistics(User user) {
+        List<Project> allProjects = projectRepository.findByUser(user);
+        List<Project> completedProjects = projectRepository.findByUserAndStatus(user, Project.Status.COMPLETED);
+        List<Project> activeProjects = projectRepository.findByUserAndStatus(user, Project.Status.ACTIVE);
+        List<Project> cancelledProjects = projectRepository.findByUserAndStatus(user, Project.Status.CANCELLED);
+        List<Project> expiredProjects = projectRepository.findByUserAndStatus(user, Project.Status.EXPIRED);
+
+        LocalDate today = LocalDate.now();
+
+        BigDecimal totalEarnings = completedProjects.stream()
+                .map(Project::getTotalPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        long completedCount = completedProjects.size();
+
+        BigDecimal avgProjectCost = completedCount > 0 ?
+                totalEarnings.divide(BigDecimal.valueOf(completedCount), RoundingMode.HALF_UP) : BigDecimal.ZERO;
+
+        BigDecimal maxProjectCost = completedProjects.stream()
+                .map(Project::getTotalPrice)
+                .max(BigDecimal::compareTo)
+                .orElse(BigDecimal.ZERO);
+
+        long uniqueClients = completedProjects.stream()
+                .map(Project::getClientName)
+                .distinct()
+                .count();
+
+        long totalProjects = allProjects.size();
+
+        double successRate = totalProjects > 0 ? (double) completedCount / totalProjects * 100 : 0;
+
+        long overdueProjects = expiredProjects.size();
+
+        double avgDuration = completedProjects.stream()
+                .filter(p -> p.getDeadline() != null)
+                .mapToLong(p -> java.time.temporal.ChronoUnit.DAYS.between(p.getCreationDate(), p.getDeadline()))
+                .average().orElse(0);
+
+        long withAdvancePayment = allProjects.stream()
+                .filter(p -> p.getAdvancePayment().compareTo(BigDecimal.ZERO) > 0)
+                .count();
+
+        BigDecimal avgAdvancePayment = allProjects.stream()
+                .map(Project::getAdvancePayment)
+                .filter(p -> p.compareTo(BigDecimal.ZERO) > 0)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        if (withAdvancePayment > 0) {
+            avgAdvancePayment = avgAdvancePayment.divide(BigDecimal.valueOf(withAdvancePayment), RoundingMode.HALF_UP);
+        }
+
+        long withLinks = allProjects.stream()
+                .filter(p -> p.getProjectLink() != null && !p.getProjectLink().isBlank())
+                .count();
+
+        Optional<LocalDate> nearestDeadline = activeProjects.stream()
+                .map(Project::getDeadline)
+                .filter(Objects::nonNull)
+                .min(LocalDate::compareTo);
+
+        long recentProjects = allProjects.stream()
+                .filter(p -> p.getCreationDate() != null && p.getCreationDate().isAfter(ChronoLocalDateTime.from(today.minusMonths(1))))
+                .count();
+
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+        DecimalFormat df = new DecimalFormat("#.##", symbols);
+
+        Map<String, Object> stats = new LinkedHashMap<>();
+        stats.put("💰 Total Earnings", totalEarnings);
+        stats.put("📊 Average Project Cost", avgProjectCost);
+        stats.put("🏆 Most Expensive Project", maxProjectCost);
+        stats.put("👥 Unique Clients", uniqueClients);
+        stats.put("🎯 Success Rate (%)", df.format(successRate));
+        stats.put("📂 Total Projects", totalProjects);
+        stats.put("🔴 Active Projects", activeProjects.size());
+        stats.put("✅ Completed Projects", completedCount);
+        stats.put("❌ Cancelled Projects", cancelledProjects.size());
+        stats.put("⏰ Overdue Projects", overdueProjects);
+        stats.put("📅 Average Duration (days)", df.format(avgDuration));
+        stats.put("🔒 With Advance Payment", withAdvancePayment);
+        stats.put("🧾 Average Advance Payment", avgAdvancePayment);
+        stats.put("🔗 With Project Link", withLinks);
+        stats.put("📆 Nearest Deadline", nearestDeadline.orElse(null));
+        stats.put("🆕 New Projects This Month", recentProjects);
+
+        return stats;
     }
 
     public void update(Project project) {
