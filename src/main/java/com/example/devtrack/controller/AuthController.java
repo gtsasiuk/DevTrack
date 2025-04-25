@@ -118,12 +118,10 @@ public class AuthController {
                 model.addAttribute("passwordError", "Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one digit, and one special character.");
             }
 
-            // Перевірка на збіг паролів
             if (!user.getPassword().equals(confirmPassword)) {
                 model.addAttribute("confirmPasswordError", "Passwords do not match.");
             }
 
-            // Перевірка на унікальність імені користувача та емейлу
             if (userService.existsByUsername(user.getUsername())) {
                 model.addAttribute("usernameError", "Username is already taken.");
             }
@@ -131,7 +129,6 @@ public class AuthController {
                 model.addAttribute("emailError", "Email is already in use.");
             }
 
-            // Якщо є помилки, повертаємо форму реєстрації
             if (model.containsAttribute("passwordError") || model.containsAttribute("confirmPasswordError") ||
                     model.containsAttribute("usernameError") || model.containsAttribute("emailError")) {
                 return "auth/registration";

@@ -488,6 +488,14 @@ html, body {
     width: fit-content;
 }
 
+.profile-form-title {
+    font-weight: 700;
+    font-size: 32px;
+    margin: 0;
+    padding: 10px 15px;
+    width: fit-content;
+}
+
 /** Project form **/
 .project-title-body {
     display: flex;
@@ -524,6 +532,10 @@ html, body {
     margin-top: 20px;
     margin-bottom: 20px;
     line-height: 30px;
+}
+
+.btn-cancel:active {
+    border-color: #fff !important;
 }
 
 .project-form-item label {
@@ -1044,4 +1056,110 @@ html, body {
     font-size: 18px;
     font-style: italic;
     font-weight: 900;
+}
+
+/** Profile changing forms **/
+.profile-form-body {
+    background-color: #fff;
+    color: #000;
+    border-radius: 30px;
+    display: block;
+    margin: 45px auto 20px auto;
+    padding: 20px;
+    box-shadow: 0 5px 35px rgba(0, 0, 0, 0.25);
+}
+
+.profile-form-title-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+.profile-form-title-body .btn-cancel {
+    padding: 5px 20px 5px 35px;
+}
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 25px 20px 20px 20px;
+}
+
+.profile-form-item {
+    margin-bottom: 15px;
+}
+
+.profile-form-item label {
+    color: #7D8592;
+    font-size: 18px;
+    font-weight: 700;
+    margin-left: 10px;
+}
+
+.profile-form-item input {
+    color: #7D8592 !important;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 20px;
+    padding: 12px 15px;
+    border: 2px solid #D8E0F0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    outline: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.profile-form-item input::placeholder {
+    color: #7D8592;
+    font-weight: 500;
+    opacity: 1;
+}
+
+.profile-form-item input:focus {
+    border-color: #A8B3C9;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-container input {
+    flex: 1;
+    padding-right: 40px;
+}
+
+.btn-profile-submit {
+    background-color: #3F8CFF;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 240px;
+    border: none;
+    border-radius: 15px;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 30px auto 0 auto;
+    padding: 10px 15px;
+    box-shadow: 0 4px 8px rgba(63, 140, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out;
+}
+
+.btn-profile-submit:hover {
+    transform: scale(1.05);
+}
+
+.btn-profile-submit i {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    width: 18px;
+    margin-left: 10px;
 }
