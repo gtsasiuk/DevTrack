@@ -19,8 +19,6 @@
                         <label for="username" class="form-label">Username</label>
                         <input type="text" id="username" name="username" class="form-control"
                                th:classappend="${usernameError} ? ' is-invalid' : ''"
-                               oninvalid="this.setCustomValidity('Please enter your username')"
-                               oninput="this.setCustomValidity('')"
                                placeholder="Your username" required>
                         <div class="invalid-feedback" th:if="${usernameError}" th:text="${usernameError}"></div>
                     </div>
@@ -28,8 +26,6 @@
                         <label for="password" class="form-label">Password</label>
                         <div class="password-container">
                             <input type="password" id="password" name="password" class="form-control"
-                                   oninvalid="this.setCustomValidity('Please enter your password')"
-                                   oninput="this.setCustomValidity('')"
                                    th:classappend="${passwordError} ? ' is-invalid' : ''"
                                    placeholder="Your password" required>
                             <button type="button" id="toggle-password" class="toggle-password">

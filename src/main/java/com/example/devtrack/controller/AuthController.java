@@ -113,24 +113,31 @@ public class AuthController {
                                @RequestParam String confirmPassword,
                                @RequestParam(value = "rememberMe", required = false) Boolean rememberMe) {
         try {
+            boolean hasError = false;
+
             String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).{8,}$";
+
             if (!user.getPassword().matches(passwordPattern)) {
                 model.addAttribute("passwordError", "Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one digit, and one special character.");
+                hasError = true;
             }
 
             if (!user.getPassword().equals(confirmPassword)) {
                 model.addAttribute("confirmPasswordError", "Passwords do not match.");
+                hasError = true;
             }
 
             if (userService.existsByUsername(user.getUsername())) {
                 model.addAttribute("usernameError", "Username is already taken.");
-            }
-            if (userService.existsByEmail(user.getEmail())) {
-                model.addAttribute("emailError", "Email is already in use.");
+                hasError = true;
             }
 
-            if (model.containsAttribute("passwordError") || model.containsAttribute("confirmPasswordError") ||
-                    model.containsAttribute("usernameError") || model.containsAttribute("emailError")) {
+            if (userService.existsByEmail(user.getEmail())) {
+                model.addAttribute("emailError", "Email is already in use.");
+                hasError = true;
+            }
+
+            if (hasError) {
                 return "auth/registration";
             }
 

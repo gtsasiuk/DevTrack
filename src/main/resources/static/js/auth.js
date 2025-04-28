@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (input.classList.contains("is-invalid")) {
                 input.classList.remove("is-invalid");
 
-                const feedback = input.closest(".auth-form-item").querySelector(".invalid-feedback");
+                const feedback = input.closest(".auth-form-item, .profile-form-item").querySelector(".invalid-feedback");
                 if (feedback) {
                     feedback.style.display = "none";
                 }
