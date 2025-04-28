@@ -2,33 +2,40 @@
     <div class="container header">
         <div class="row">
             <nav class="nav">
-            <div class="col-6">
-                <div class="logo">
-                    <a href="/"><strong>Dev</strong>Track<img th:src="@{/img/logo.svg}" alt="Logo"></a>
+                <div class="col-6">
+                    <div class="logo">
+                        <a href="/"><strong>Dev</strong>Track<img th:src="@{/img/logo.svg}" alt="Logo"></a>
+                    </div>
                 </div>
-            </div>
-            <div class="col-6">
-                <div class="nav-row">
-                    <ul class="nav-list">
-                        <li class="nav-list-item">
-                            <a th:href="@{/}"
-                               th:classappend="${requestURI == '/home' ? 'nav-list-link--active' : ''}"
-                               class="nav-list-link">Home</a>
-                        </li>
-                        <li class="nav-list-item">
-                            <a th:href="@{/projects}"
-                               th:classappend="${requestURI.startsWith('/projects') ? 'nav-list-link--active' : ''}"
-                               class="nav-list-link">Projects</a>
-                        </li>
-                        <li class="nav-list-item">
-                            <a th:href="@{/profile}"
-                               th:classappend="${requestURI.startsWith('/profile')? 'nav-list-link--active' : ''}"
-                               class="nav-list-link">Profile</a>
-                        </li>
-                        <li class="nav-list-item btn-logout"><a th:href="@{/auth/login?logout=true}" class="nav-list-link"><i class="fa-solid fa-door-open"></i></a></li>
-                    </ul>
+                <div class="col-6">
+                    <div class="nav-row">
+                        <ul class="nav-list">
+                            <li class="nav-list-item">
+                                <a th:href="@{/}"
+                                   th:classappend="${requestURI == '/home' ? 'nav-list-link--active' : ''}"
+                                   th:text="#{nav.home}"
+                                   class="nav-list-link"></a>
+                            </li>
+                            <li class="nav-list-item">
+                                <a th:href="@{/projects}"
+                                   th:classappend="${requestURI.startsWith('/projects') ? 'nav-list-link--active' : ''}"
+                                   th:text="#{nav.projects}"
+                                   class="nav-list-link"></a>
+                            </li>
+                            <li class="nav-list-item">
+                                <a th:href="@{/profile}"
+                                   th:classappend="${requestURI.startsWith('/profile') ? 'nav-list-link--active' : ''}"
+                                   th:text="#{nav.profile}"
+                                   class="nav-list-link"></a>
+                            </li>
+                            <li class="nav-list-item btn-logout">
+                                <a th:href="@{/auth/login?logout=true}" class="nav-list-link">
+                                    <i class="fa-solid fa-door-open"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
             </nav>
         </div>
     </div>

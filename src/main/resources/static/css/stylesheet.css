@@ -13,6 +13,11 @@ html, body {
     flex: 1;
 }
 
+.span-hi {
+    color: #000 !important;
+    font-weight: 800 !important;
+}
+
 /** Header **/
 .header {
     background-color: #fff;
@@ -442,6 +447,11 @@ html, body {
     transform: scale(1.05);
 }
 
+.btn-record span {
+    color: #fff;
+    font-weight: 700;
+}
+
 .btn-record a {
     color: #fff;
     text-decoration: none;
@@ -459,6 +469,7 @@ html, body {
     transition: all 0.5s ease-in-out;
     transform: scale(1.05);
 }
+
 
 .btn-record i {
     padding-left: 10px;

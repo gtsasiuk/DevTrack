@@ -2,7 +2,7 @@
     <div class="container footer">
       <div class="row">
         <div class="copyright">
-          <p><strong>DevTrack</strong> © <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span> All rights reserved.</p>
+          <p><strong>DevTrack</strong> © <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}"></span> <span th:text="#{footer.copyright}"></span></p>
         </div>
       </div>
     </div>
