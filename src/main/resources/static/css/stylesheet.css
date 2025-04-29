@@ -18,6 +18,38 @@ html, body {
     font-weight: 800 !important;
 }
 
+/** Lang switcher **/
+.lang-switcher {
+    gap: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lang-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 50%;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+}
+
+.lang-btn img {
+    border-radius: 50%;
+    transition: filter 0.3s ease, opacity 0.3s ease;
+    filter: grayscale(100%);
+    opacity: 0.6;
+}
+
+.lang-btn.active img {
+    filter: none;
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+
 /** Header **/
 .header {
     background-color: #fff;

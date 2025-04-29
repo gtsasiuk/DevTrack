@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>DevTrack - Projects</title>
+    <title th:text="#{page.project.title}"></title>
     <link rel="icon" type="image/svg+xml" th:href="@{/img/logo.svg}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -10,25 +10,34 @@
 <body>
 <div th:replace="~{fragments/header}"></div>
 <div class="container">
-    <div class="title"><h2>My projects</h2></div>
+    <div class="title"><h2 th:text="#{project.title}"></h2></div>
     <div class="row filter-container">
         <div class="col-6">
-            <div class="btn-create"><a th:href="@{/projects/create}"><i class="fa-solid fa-plus"></i> Add a project</a></div>
+            <div class="btn-create"><a
+                    th:href="@{/projects/create}"><i class="fa-solid fa-plus"></i><span th:text="#{project.add.btn}"></span></a></div>
         </div>
-        <div class="col-6 filter-body ">
+        <div class="col-6 filter-body">
             <form method="get" th:action="@{/projects}" class="form-inline">
                 <div class="sort-group">
-                    <label for="sort">Sort by:</label>
+                    <label for="sort" th:text="#{project.sort}"></label>
                     <select name="sort" id="sort" class="form-select" onchange="this.form.submit()">
-                        <option value="">No sorting</option>
-                        <option value="deadlineAsc" th:selected="${sort == 'deadlineAsc'}">Deadline ↑</option>
-                        <option value="deadlineDesc" th:selected="${sort == 'deadlineDesc'}">Deadline ↓</option>
-                        <option value="priceAsc" th:selected="${sort == 'priceAsc'}">Price ↑</option>
-                        <option value="priceDesc" th:selected="${sort == 'priceDesc'}">Price ↓</option>
-                        <option value="statusActive" th:selected="${sort == 'statusActive'}">Status: Active</option>
-                        <option value="statusCompleted" th:selected="${sort == 'statusCompleted'}">Status: Completed</option>
-                        <option value="statusExpired" th:selected="${sort == 'statusExpired'}">Status: Expired</option>
-                        <option value="statusCanceled" th:selected="${sort == 'statusCanceled'}">Status: Canceled</option>
+                        <option value="" th:text="#{project.sort.nosort}"></option>
+                        <option value="deadlineAsc" th:text="#{project.sort.deadline.asc}"
+                                th:selected="${sort == 'deadlineAsc'}"></option>
+                        <option value="deadlineDesc" th:text="#{project.sort.deadline.desc}"
+                                th:selected="${sort == 'deadlineDesc'}"></option>
+                        <option value="priceAsc" th:text="#{project.sort.price.asc}"
+                                th:selected="${sort == 'priceAsc'}"></option>
+                        <option value="priceDesc" th:text="#{project.sort.price.desc}"
+                                th:selected="${sort == 'priceDesc'}"></option>
+                        <option value="statusActive" th:text="#{project.sort.status.active}"
+                                th:selected="${sort == 'statusActive'}"></option>
+                        <option value="statusCompleted" th:text="#{project.sort.status.completed}"
+                                th:selected="${sort == 'statusCompleted'}"></option>
+                        <option value="statusExpired" th:text="#{project.sort.status.expired}"
+                                th:selected="${sort == 'statusExpired'}"></option>
+                        <option value="statusCanceled" th:text="#{project.sort.status.canceled}"
+                                th:selected="${sort == 'statusCanceled'}"></option>
                     </select>
                 </div>
             </form>
@@ -45,7 +54,9 @@
                     </div>
                     <div class="col-6">
                         <div class="project-status">
-                            <div class="project-status-item"><strong>Status <i class="fa-solid fa-tag"></i></strong></div>
+                            <div class="project-status-item">
+                                <strong><span th:text="#{project.cart.status}"></span> <i class="fa-solid fa-tag"></i></strong>
+                            </div>
                             <div class="project-status-item"
                                  th:classappend="${project.status.name() == 'ACTIVE' ? 'status-active' :
                                                  (project.status.name() == 'COMPLETED' ? 'status-completed' :
@@ -61,14 +72,14 @@
                 </div>
                 <hr>
                 <div class="project-card-text">
-                    <strong>Client:</strong> <span th:text="${project.clientName}"></span><br>
-                    <strong>Deadline:</strong> <span th:text="${#temporals.format(project.deadline, 'dd.MM.yyyy')}"></span><br>
-                    <strong>Expected payment:</strong> <span th:text="${project.totalPrice - project.advancePayment}"></span> ₴<br>
+                    <strong th:text="#{project.cart.client}"></strong> <span th:text="${project.clientName}"></span><br>
+                    <strong th:text="#{project.cart.deadline}"></strong> <span th:text="${#temporals.format(project.deadline, 'dd.MM.yyyy')}"></span><br>
+                    <strong th:text="#{project.cart.expected.payment}"></strong> <span th:text="${project.totalPrice - project.advancePayment}"></span> ₴<br>
                 </div>
                 <div class="project-card-price">
                     <div class="row">
                         <div class="col-8">
-                            <p><em>Total Price:</em> <span th:text="${project.totalPrice}"></span> ₴</p>
+                            <p><em th:text="#{project.card.total.price}"></em> <span th:text="${project.totalPrice}"></span> ₴</p>
                         </div>
                         <div class="col-4">
                             <div class="project-card-settings">
@@ -83,7 +94,7 @@
         </div>
         <div th:if="${projects == null or #lists.isEmpty(projects)}" class="no-projects">
             <img th:src="@{/img/no_projects.svg}" alt="No projects available" class="img-fluid">
-            <p>There are no projects yet<br>Let's add them</p>
+            <p th:utext="#{project.noprojects}"></p>
         </div>
     </div>
 </div>
