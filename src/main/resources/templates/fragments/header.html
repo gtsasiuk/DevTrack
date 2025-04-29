@@ -2,12 +2,22 @@
     <div class="container header">
         <div class="row">
             <nav class="nav">
-                <div class="col-6">
+                <div class="col-5">
                     <div class="logo">
                         <a href="/"><strong>Dev</strong>Track<img th:src="@{/img/logo.svg}" alt="Logo"></a>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-2">
+                    <div class="lang-switcher">
+                        <a th:href="@{__${requestURI}__(lang='en')}" class="lang-btn" th:classappend="${#locale.language == 'en'} ? 'active'">
+                            <img src="/img/flags/en.svg" alt="English" width="32" height="32">
+                        </a>
+                        <a th:href="@{__${requestURI}__(lang='uk')}" class="lang-btn" th:classappend="${#locale.language == 'uk'} ? 'active'">
+                            <img src="/img/flags/ua.svg" alt="Українська" width="32" height="32">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-5">
                     <div class="nav-row">
                         <ul class="nav-list">
                             <li class="nav-list-item">
