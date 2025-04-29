@@ -14,6 +14,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDateTime;
 import java.util.*;
 
@@ -145,7 +146,7 @@ public class ProjectService {
 
         double avgDuration = completedProjects.stream()
                 .filter(p -> p.getDeadline() != null)
-                .mapToLong(p -> java.time.temporal.ChronoUnit.DAYS.between(p.getCreationDate(), p.getDeadline()))
+                .mapToLong(p -> java.time.temporal.ChronoUnit.DAYS.between(p.getCreationDate().toLocalDate(), p.getDeadline()))
                 .average().orElse(0);
 
         long withAdvancePayment = allProjects.stream()
@@ -171,29 +172,29 @@ public class ProjectService {
                 .min(LocalDate::compareTo);
 
         long recentProjects = allProjects.stream()
-                .filter(p -> p.getCreationDate() != null && p.getCreationDate().isAfter(ChronoLocalDateTime.from(today.minusMonths(1))))
+                .filter(p -> p.getCreationDate() != null && p.getCreationDate().isAfter(today.minusMonths(1).atStartOfDay()))
                 .count();
 
         DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
         DecimalFormat df = new DecimalFormat("#.##", symbols);
 
         Map<String, Object> stats = new LinkedHashMap<>();
-        stats.put("💰 Total Earnings", totalEarnings);
-        stats.put("📊 Average Project Cost", avgProjectCost);
-        stats.put("🏆 Most Expensive Project", maxProjectCost);
-        stats.put("👥 Unique Clients", uniqueClients);
-        stats.put("🎯 Success Rate (%)", df.format(successRate));
-        stats.put("📂 Total Projects", totalProjects);
-        stats.put("🔴 Active Projects", activeProjects.size());
-        stats.put("✅ Completed Projects", completedCount);
-        stats.put("❌ Cancelled Projects", cancelledProjects.size());
-        stats.put("⏰ Overdue Projects", overdueProjects);
-        stats.put("📅 Average Duration (days)", df.format(avgDuration));
-        stats.put("🔒 With Advance Payment", withAdvancePayment);
-        stats.put("🧾 Average Advance Payment", avgAdvancePayment);
-        stats.put("🔗 With Project Link", withLinks);
-        stats.put("📆 Nearest Deadline", nearestDeadline.orElse(null));
-        stats.put("🆕 New Projects This Month", recentProjects);
+        stats.put("totalEarnings", totalEarnings);
+        stats.put("avgProjectCost", avgProjectCost);
+        stats.put("maxProjectCost", maxProjectCost);
+        stats.put("uniqueClients", uniqueClients);
+        stats.put("successRate", df.format(successRate));
+        stats.put("totalProjects", totalProjects);
+        stats.put("activeProjects", activeProjects.size());
+        stats.put("completedCount", completedCount);
+        stats.put("cancelledProjects", cancelledProjects.size());
+        stats.put("overdueProjects", overdueProjects);
+        stats.put("avgDuration", df.format(avgDuration));
+        stats.put("withAdvancePayment", withAdvancePayment);
+        stats.put("avgAdvancePayment", avgAdvancePayment);
+        stats.put("withLinks", withLinks);
+        stats.put("nearestDeadline", nearestDeadline.orElse(null));
+        stats.put("recentProjects", recentProjects);
 
         return stats;
     }
