@@ -44,7 +44,7 @@
                                        th:classappend="${project.status.name() == 'ACTIVE' ? 'fa-spinner' :
                                                      (project.status.name() == 'COMPLETED' ? 'fa-check' :
                                                      (project.status.name() == 'EXPIRED' ? 'fa-hourglass-end' : 'fa-xmark'))}"></i>
-                                    <span th:text="${project.status.getDisplayName()}"></span>
+                                    <span th:text="#{${project.status.messageKey}}"></span>
                                 </div>
                             </div>
                         </div>

@@ -63,19 +63,19 @@ public class Project {
     private Status status;
 
     public enum Status {
-        ACTIVE("Active"),
-        COMPLETED("Completed"),
-        CANCELLED("Cancelled"),
-        EXPIRED("Expired");
+        ACTIVE("project.status.active"),
+        COMPLETED("project.status.completed"),
+        CANCELLED("project.status.cancelled"),
+        EXPIRED("project.status.expired");
 
-        private final String displayName;
+        private final String messageKey;
 
-        Status(String displayName) {
-            this.displayName = displayName;
+        Status(String messageKey) {
+            this.messageKey = messageKey;
         }
 
-        public String getDisplayName() {
-            return displayName;
+        public String getMessageKey() {
+            return messageKey;
         }
     }
 }
