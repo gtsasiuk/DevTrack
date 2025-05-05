@@ -9,6 +9,8 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Locale;
+
 @Controller
 @RequiredArgsConstructor
 public class AuthController {
@@ -28,6 +32,7 @@ public class AuthController {
     private final BCryptPasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
+    private final MessageSource messageSource;
     private final JwtUtil jwtUtil;
 
     @GetMapping("/")
@@ -62,7 +67,7 @@ public class AuthController {
                 jwtCookie.setSecure(true);
             }
             response.addCookie(jwtCookie);
-            model.addAttribute("logout", "You have been logged out.");
+            model.addAttribute("logout", messageSource.getMessage("logout.success", null, null));
         }
         return "auth/login";
     }
@@ -91,11 +96,12 @@ public class AuthController {
 
             return "redirect:/home";
         } catch (Exception e) {
+            Locale locale = LocaleContextHolder.getLocale();
             System.err.println("Authentication error: " + e.getMessage());
             if (!userService.existsByUsername(username)) {
-                model.addAttribute("usernameError", "Username not found.");
+                model.addAttribute("usernameError", messageSource.getMessage("error.username.notfound", null, locale));
             } else {
-                model.addAttribute("passwordError", "Incorrect password.");
+                model.addAttribute("passwordError", messageSource.getMessage("error.password.incorrect", null, locale));
             }
             return "auth/login";
         }
@@ -114,26 +120,27 @@ public class AuthController {
                                @RequestParam(value = "rememberMe", required = false) Boolean rememberMe) {
         try {
             boolean hasError = false;
+            Locale locale = LocaleContextHolder.getLocale();
 
             String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).{8,}$";
 
             if (!user.getPassword().matches(passwordPattern)) {
-                model.addAttribute("passwordError", "Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one digit, and one special character.");
+                model.addAttribute("passwordError", messageSource.getMessage("error.password.pattern", null, locale));
                 hasError = true;
             }
 
             if (!user.getPassword().equals(confirmPassword)) {
-                model.addAttribute("confirmPasswordError", "Passwords do not match.");
+                model.addAttribute("confirmPasswordError", messageSource.getMessage("error.password.mismatch", null, locale));
                 hasError = true;
             }
 
             if (userService.existsByUsername(user.getUsername())) {
-                model.addAttribute("usernameError", "Username is already taken.");
+                model.addAttribute("usernameError", messageSource.getMessage("error.username.exists", null, locale));
                 hasError = true;
             }
 
             if (userService.existsByEmail(user.getEmail())) {
-                model.addAttribute("emailError", "Email is already in use.");
+                model.addAttribute("emailError", messageSource.getMessage("error.email.exists", null, locale));
                 hasError = true;
             }
 

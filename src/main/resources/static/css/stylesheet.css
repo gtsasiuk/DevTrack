@@ -19,6 +19,13 @@ html, body {
 }
 
 /** Lang switcher **/
+.auth-lang-switcher {
+    gap: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
 .lang-switcher {
     gap: 0.5rem;
     display: flex;
@@ -227,6 +234,10 @@ html, body {
     box-shadow: 0 5px 35px rgba(0, 0, 0, 0.25);
 }
 
+.auth-body h2 {
+    margin-top: 20px !important;
+}
+
 .auth-form {
     display: flex;
     flex-direction: column;
@@ -422,6 +433,15 @@ html, body {
 .is-invalid::placeholder {
     color: #F65160 !important;
     opacity: 0.7;
+}
+
+.logout-success {
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 10px;
+    color: #0AC947;
+    display: flex;
+    justify-content: center;
 }
 
 /** Home page **/

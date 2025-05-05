@@ -8,6 +8,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,6 +26,7 @@ public class ProfileController {
     private final UserService userService;
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
+    private final MessageSource messageSource;
     private final JwtUtil jwtUtil;
 
     private String getJwtToken(HttpServletRequest request) {

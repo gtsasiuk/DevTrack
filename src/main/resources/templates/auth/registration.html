@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>DevTrack - Registration</title>
+    <title th:text="#{page.auth.registration.title}"></title>
     <link rel="icon" type="image/svg+xml" th:href="@{/img/logo.svg}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -12,26 +12,34 @@
 <div class="container registration">
     <div class="row">
         <div class="auth-body col-6">
-            <h2 class="title">Register in DevTrack</h2>
+            <div class="auth-lang-switcher">
+                <a th:href="@{__${requestURI}__(lang='en')}" class="lang-btn" th:classappend="${#locale.language == 'en'} ? 'active'">
+                    <img src="/img/flags/en.svg" alt="English" width="32" height="32">
+                </a>
+                <a th:href="@{__${requestURI}__(lang='uk')}" class="lang-btn" th:classappend="${#locale.language == 'uk'} ? 'active'">
+                    <img src="/img/flags/ua.svg" alt="Українська" width="32" height="32">
+                </a>
+            </div>
+            <h2 class="title" th:text="#{auth.form.registration.title}"></h2>
             <div class="auth-form">
                 <form id="registration-form" th:action="@{/auth/registration}" method="post">
                     <div class="auth-form-item">
-                        <label for="username" class="form-label">Username</label>
+                        <label for="username" class="form-label" th:text="#{profile.username}"></label>
                         <input type="text" id="username" name="username" class="form-control" th:classappend="${usernameError} ? ' is-invalid' : ''"
-                               placeholder="Your username" th:value="${user.username}" required>
+                               th:placeholder="#{auth.form.placeholder.username}" th:value="${user.username}" required>
                         <div class="invalid-feedback" th:if="${usernameError}" th:text="${usernameError}"></div>
                     </div>
                     <div class="auth-form-item">
-                        <label for="email" class="form-label">Email</label>
+                        <label for="email" class="form-label" th:text="#{profile.email}"></label>
                         <input type="email" id="email" name="email" class="form-control" th:classappend="${emailError} ? ' is-invalid' : ''"
-                               placeholder="Your email@gmail.com" th:value="${user.email}" required>
+                               th:placeholder="#{auth.form.placeholder.email}" th:value="${user.email}" required>
                         <div class="invalid-feedback" th:if="${emailError}" th:text="${emailError}"></div>
                     </div>
                     <div class="auth-form-item">
-                        <label for="password" class="form-label">Password</label>
+                        <label for="password" class="form-label" th:text="#{profile.password}"></label>
                         <div class="password-container">
                             <input type="password" id="password" name="password" class="form-control" th:classappend="${passwordError} ? ' is-invalid' : ''"
-                                   placeholder="Your password"  required>
+                                   th:placeholder="#{auth.form.placeholder.password}"  required>
                             <button type="button" id="toggle-password" class="toggle-password">
                                 <img id="eye-icon" th:src="@{/img/eye-password.svg}" alt="view password">
                                 <span class="eye-cross"></span>
@@ -40,25 +48,24 @@
                         <div class="invalid-feedback" th:if="${passwordError}" th:text="${passwordError}"></div>
                     </div>
                     <div class="auth-form-item">
-                        <label for="confirm-password" class="form-label">Confirm Password</label>
+                        <label for="confirm-password" class="form-label" th:text="#{profile.confirm-pass}"></label>
                         <input type="password" id="confirm-password" name="confirmPassword" th:classappend="${confirmPasswordError} ? ' is-invalid' : ''"
-                               placeholder="Confirm your password" class="form-control" required>
+                               th:placeholder="#{auth.form.placeholder.confirm-pass}" class="form-control" required>
                         <div class="invalid-feedback" th:if="${confirmPasswordError}" th:text="${confirmPasswordError}"></div>
                     </div>
                     <div class="auth-form-item">
                         <div class="auth-form-check">
                             <input class="auth-form-check-input" type="checkbox" id="rememberMe" name="rememberMe">
-                            <label class="auth-form-check-label" for="rememberMe">Remember me</label>
+                            <label class="auth-form-check-label" for="rememberMe" th:text="#{auth.form.remember-me}"></label>
                         </div>
                     </div>
                     <div class="auth-form-item">
-                        <button type="submit" class="btn-auth-submit">Register <i class="fa-solid fa-arrow-right"></i></button>
+                        <button type="submit" class="btn-auth-submit"><span th:text="#{auth.form.btn.register}"></span> <i class="fa-solid fa-arrow-right"></i></button>
                     </div>
                 </form>
-                <div th:if="${error}" class="text-danger mt-3" th:text="${error}"></div>
             </div>
             <div class="register">
-                <a href="/auth/login">You have an account already? <br> Then log in!</a>
+                <a href="/auth/login" th:utext="#{auth.form.question.login}"></a>
             </div>
         </div>
     </div>
