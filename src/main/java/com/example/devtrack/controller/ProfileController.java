@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Locale;
 import java.util.Map;
 
 @Controller
@@ -88,14 +90,15 @@ public class ProfileController {
         boolean usernameChanged = !updatedUser.getUsername().equals(currentUser.getUsername());
         boolean emailChanged = !updatedUser.getEmail().equals(currentUser.getEmail());
         boolean hasError = false;
+        Locale locale = LocaleContextHolder.getLocale();
 
         if (usernameChanged && userService.existsByUsername(updatedUser.getUsername())) {
-            model.addAttribute("usernameTaken", "Username already taken.");
+            model.addAttribute("usernameTaken", messageSource.getMessage("error.username.exists", null, locale));
             hasError = true;
         }
 
         if (emailChanged && userService.existsByEmail(updatedUser.getEmail())) {
-            model.addAttribute("emailTaken", "Email already taken.");
+            model.addAttribute("emailTaken", messageSource.getMessage("error.email.exists", null, locale));
             hasError = true;
         }
 
@@ -152,14 +155,15 @@ public class ProfileController {
         String newPassword = updatedUser.getPassword();
         String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).{8,}$";
         boolean hasError = false;
+        Locale locale = LocaleContextHolder.getLocale();
 
         if (!newPassword.matches(passwordPattern)) {
-            model.addAttribute("passwordError", "Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one digit, and one special character.");
+            model.addAttribute("passwordError", messageSource.getMessage("error.password.pattern", null, locale));
             hasError = true;
         }
 
         if (!newPassword.equals(confirmPassword)) {
-            model.addAttribute("confirmPasswordError", "Passwords do not match.");
+            model.addAttribute("confirmPasswordError", messageSource.getMessage("error.password.mismatch", null, locale));
             hasError = true;
         }
 
