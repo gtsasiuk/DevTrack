@@ -207,7 +207,7 @@ html, body {
 }
 
 .auth-logo img {
-    width: 65px;
+    width: 63px;
 }
 
 .auth-logo h1 {
@@ -1225,4 +1225,91 @@ html, body {
     color: #fff;
     width: 18px;
     margin-left: 10px;
+}
+
+@media (max-width: 767px) {
+    .footer {
+        min-height: 35px;
+    }
+
+    .copyright {
+        line-height: 35px;
+    }
+
+    .copyright p {
+        font-size: 14px;
+    }
+
+    .lang-btn img {
+        width: 28px;
+    }
+    .auth-logo {
+        margin: 35px 0 5px 0;
+    }
+
+    .auth-logo img {
+        width: 48px;
+    }
+
+    .auth-logo h1 {
+        font-size: 40px;
+    }
+
+    .auth-logo strong {
+        margin-left: 15px;
+    }
+
+    .auth-body h2 {
+        font-size: 24px;
+    }
+
+    .auth-form {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+
+    .auth-form-item label {
+        font-size: 14px;
+    }
+
+    .auth-form-item input {
+        font-size: 14px;
+    }
+
+    .toggle-password img {
+        width: 22px;
+    }
+
+    .auth-form-item .auth-form-check-label {
+        font-size: 14px;
+    }
+
+    .auth-form-item .auth-form-check {
+        margin-top: 25px;
+    }
+
+    .auth-form-item .auth-form-check-input {
+        padding: 8px;
+    }
+
+    .auth-form-item .auth-form-check-input::after {
+        font-size: 16px;
+    }
+
+    .btn-auth-submit {
+        min-width: 180px;
+        font-size: 16px;
+    }
+
+    .register a {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+
 }

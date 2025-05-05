@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:text="#{page.auth.login.title}"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" th:href="@{/img/logo.svg}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -11,7 +12,7 @@
 <div th:replace="~{fragments/auth_header}"></div>
 <div class="container login">
     <div class="row">
-        <div class="auth-body col-6">
+        <div class="auth-body col-11 col-md-10 offset-md-1 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
             <div class="auth-lang-switcher">
                 <a th:href="@{__${requestURI}__(lang='en')}" class="lang-btn" th:classappend="${#locale.language == 'en'} ? 'active'">
                     <img src="/img/flags/en.svg" alt="English" width="32" height="32">
