@@ -1,13 +1,13 @@
 <header id="header">
     <div class="container header">
         <div class="row">
-            <nav class="nav">
-                <div class="col-5">
+            <div class="nav">
+                <div class="col-8 col-md-9 col-lg-5 col-xl-5">
                     <div class="logo">
                         <a href="/"><strong>Dev</strong>Track<img th:src="@{/img/logo.svg}" alt="Logo"></a>
                     </div>
                 </div>
-                <div class="col-2">
+                <div class="col-4 col-md-3 col-lg-2 col-xl-2">
                     <div class="lang-switcher">
                         <a th:href="@{__${requestURI}__(lang='en')}" class="lang-btn" th:classappend="${#locale.language == 'en'} ? 'active'">
                             <img src="/img/flags/en.svg" alt="English" width="32" height="32">
@@ -17,7 +17,8 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-5">
+                <div class="col-12 col-md-12 col-lg-5 col-xl-5">
+                    <nav class="nav-bar">
                     <div class="nav-row">
                         <ul class="nav-list">
                             <li class="nav-list-item">
@@ -45,8 +46,9 @@
                             </li>
                         </ul>
                     </div>
+                    </nav>
                 </div>
-            </nav>
+            </div>
         </div>
     </div>
 </header>

@@ -447,6 +447,9 @@ html, body {
 /** Home page **/
 .greetings-block {
     background-image: url(../img/banner.jpg);
+    background-size: cover; /* масштабування */
+    background-position: center; /* центрування */
+    background-repeat: no-repeat;
     color: #000;
     border-radius: 30px;
     margin-top: 45px;
@@ -898,7 +901,7 @@ html, body {
 }
 
 .project-card-price p {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 900;
     margin-bottom: 0;
 }
@@ -1242,6 +1245,7 @@ html, body {
 
     .lang-btn img {
         width: 28px;
+        height: 28px;
     }
     .auth-logo {
         margin: 35px 0 5px 0;
@@ -1304,12 +1308,121 @@ html, body {
     .register a {
         font-size: 16px;
     }
+
+    .logo {
+        line-height: 38px;
+    }
+
+    .logo a {
+        font-size: 26px;
+    }
+
+    .nav-row {
+        justify-content: center;
+    }
+
+    .nav-list {
+        column-gap: 16px;
+        font-size: 16px;
+        margin-top: 25px;
+        padding-left: 20px;
+        font-weight: 600;
+    }
+
+    .btn-logout {
+        width: 36px;
+        padding: 4px;
+    }
+
+    .hello h1 {
+        font-size: 32px;
+    }
+
+    .hello h3 {
+        font-size: 28px;
+    }
+
+    .hello p {
+        font-size: 16px;
+    }
+
+    .btn-record a {
+        font-size: 16px;
+    }
+
+    .title h2 {
+        font-size: 30px;
+        text-align: center;
+    }
+
+    .project-card-price em {
+        font-size: 16px;
+        margin-right: 0;
+    }
+
+    .project-card-price p {
+        font-size: 20px;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
+    .nav-row {
+        justify-content: center;
+    }
 
+    .nav-list {
+        margin-top: 25px;
+        padding-left: 20px;
+        column-gap: 80px;
+        font-weight: 600;
+    }
+
+    .hello h1 {
+        font-size: 32px;
+    }
+
+    .hello h3 {
+        font-size: 28px;
+    }
+
+    .hello p {
+        font-size: 16px;
+    }
+
+    .btn-record a {
+        font-size: 16px;
+    }
+
+    .project-card-text {
+        font-size: 16px;
+    }
+
+    .project-card-price em {
+        font-size: 16px;
+        margin-right: 0;
+    }
+
+    .project-card-price p {
+        font-size: 20px;
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
+    .lang-btn img {
+        width: 30px;
+        height: 30px;
+    }
 
+    .logo {
+        line-height: 40px;
+    }
+
+    .nav-row {
+        line-height: 40px;
+    }
+
+    .nav-list {
+        column-gap: 20px;
+        font-size: 18px;
+    }
 }
