@@ -1098,11 +1098,6 @@ html, body {
     font-weight: 800;
     margin-bottom: 0;
 }
-
-.stats-body {
-    padding-right: 0 !important;
-}
-
 .stats-list {
     background-color: #E6EDF5;
     margin-top: 20px;
@@ -1421,6 +1416,44 @@ html, body {
     .btn-project-submit {
         min-width: 280px;
         font-size: 18px;
+    }
+
+    .profile-item h4 {
+        font-size: 20px;
+    }
+
+    .profile-item p {
+        font-size: 18px;
+    }
+
+    .stats-list-item {
+        font-size: 16px;
+    }
+
+    .stats-value {
+        font-size: 16px;
+        margin-left: 10px;
+    }
+
+    .change-password a {
+        margin-left: 0;
+    }
+
+    .btn-profile-submit {
+        min-width: 180px;
+        font-size: 16px;
+    }
+
+    .profile-form-title {
+        font-size: 24px;
+    }
+
+    .profile-form-item label {
+        font-size: 14px;
+    }
+
+    .profile-form-item input {
+        font-size: 14px;
     }
 }
 
