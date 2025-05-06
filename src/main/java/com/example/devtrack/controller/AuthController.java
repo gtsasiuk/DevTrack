@@ -60,6 +60,7 @@ public class AuthController {
             model.addAttribute("error", "Invalid username or password.");
         }
         if (logout != null) {
+            Locale locale = LocaleContextHolder.getLocale();
             Cookie jwtCookie = new Cookie("jwt", null);
             jwtCookie.setMaxAge(0);
             jwtCookie.setPath("/");
@@ -67,7 +68,7 @@ public class AuthController {
                 jwtCookie.setSecure(true);
             }
             response.addCookie(jwtCookie);
-            model.addAttribute("logout", messageSource.getMessage("logout.success", null, null));
+            model.addAttribute("logout", messageSource.getMessage("logout.success", null, locale));
         }
         return "auth/login";
     }

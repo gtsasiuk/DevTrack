@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -35,11 +34,11 @@ public class Project {
 
     @Column(name = "total_price", nullable = false)
     @Min(value = 0)
-    private BigDecimal totalPrice = BigDecimal.ZERO;
+    private Long totalPrice = 0L;
 
     @Column(name = "advance_payment")
     @Min(value = 0)
-    private BigDecimal advancePayment = BigDecimal.ZERO;
+    private Long advancePayment = 0L;
 
     @Column(name = "creation_date", updatable = false)
     @CreationTimestamp

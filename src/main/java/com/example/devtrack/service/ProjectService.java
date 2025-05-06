@@ -14,8 +14,6 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDateTime;
 import java.util.*;
 
 @Service
@@ -28,8 +26,8 @@ public class ProjectService {
     }
 
     public Project findById(long id) {
-        return projectRepository.findById(id).orElseThrow(() ->
-                new NoSuchElementException("Project with ID " + id + " not found"));
+        return projectRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Project with ID " + id + " not found"));
     }
 
     public List<Project> findAll() {
@@ -59,9 +57,7 @@ public class ProjectService {
 
     public void markExpiredProjects(User user) {
         List<Project> activeProjects = projectRepository.findByUserAndStatus(user, Project.Status.ACTIVE);
-
         LocalDate today = LocalDate.now();
-
         for (Project project : activeProjects) {
             if (project.getDeadline() != null && project.getDeadline().isBefore(today)) {
                 project.setStatus(Project.Status.EXPIRED);
@@ -73,19 +69,18 @@ public class ProjectService {
     public Map<String, Object> getUserAchievements(User user) {
         List<Project> projects = projectRepository.findByUserAndStatus(user, Project.Status.COMPLETED);
 
-        BigDecimal totalEarnings = projects.stream()
-                .map(Project::getTotalPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        long totalEarnings = projects.stream()
+                .mapToLong(Project::getTotalPrice)
+                .sum();
 
         long completedCount = projects.size();
 
-        BigDecimal avgProjectCost = completedCount > 0 ?
-                totalEarnings.divide(BigDecimal.valueOf(completedCount), RoundingMode.HALF_UP) : BigDecimal.ZERO;
+        long avgProjectCost = completedCount > 0 ? totalEarnings / completedCount : 0;
 
-        BigDecimal maxProjectCost = projects.stream()
-                .map(Project::getTotalPrice)
-                .max(BigDecimal::compareTo)
-                .orElse(BigDecimal.ZERO);
+        long maxProjectCost = projects.stream()
+                .mapToLong(Project::getTotalPrice)
+                .max()
+                .orElse(0);
 
         long uniqueClients = projects.stream()
                 .map(Project::getClientName)
@@ -95,9 +90,6 @@ public class ProjectService {
         long totalProjects = projectRepository.findByUser(user).size();
 
         double successRate = totalProjects > 0 ? (double) completedCount / totalProjects * 100 : 0;
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
-        DecimalFormat df = new DecimalFormat("#.##", symbols);
-        String formattedRate = df.format(successRate);
 
         Map<String, Object> achievements = new HashMap<>();
         achievements.put("totalEarnings", totalEarnings);
@@ -105,7 +97,7 @@ public class ProjectService {
         achievements.put("avgProjectCost", avgProjectCost);
         achievements.put("maxProjectCost", maxProjectCost);
         achievements.put("uniqueClients", uniqueClients);
-        achievements.put("successRate", formattedRate);
+        achievements.put("successRate", String.format(Locale.US, "%.2f", successRate));
 
         return achievements;
     }
@@ -119,27 +111,12 @@ public class ProjectService {
 
         LocalDate today = LocalDate.now();
 
-        BigDecimal totalEarnings = completedProjects.stream()
-                .map(Project::getTotalPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-
+        long totalEarnings = completedProjects.stream().mapToLong(Project::getTotalPrice).sum();
         long completedCount = completedProjects.size();
-
-        BigDecimal avgProjectCost = completedCount > 0 ?
-                totalEarnings.divide(BigDecimal.valueOf(completedCount), RoundingMode.HALF_UP) : BigDecimal.ZERO;
-
-        BigDecimal maxProjectCost = completedProjects.stream()
-                .map(Project::getTotalPrice)
-                .max(BigDecimal::compareTo)
-                .orElse(BigDecimal.ZERO);
-
-        long uniqueClients = completedProjects.stream()
-                .map(Project::getClientName)
-                .distinct()
-                .count();
-
+        long avgProjectCost = completedCount > 0 ? totalEarnings / completedCount : 0;
+        long maxProjectCost = completedProjects.stream().mapToLong(Project::getTotalPrice).max().orElse(0);
+        long uniqueClients = completedProjects.stream().map(Project::getClientName).distinct().count();
         long totalProjects = allProjects.size();
-
         double successRate = totalProjects > 0 ? (double) completedCount / totalProjects * 100 : 0;
 
         long overdueProjects = expiredProjects.size();
@@ -150,17 +127,14 @@ public class ProjectService {
                 .average().orElse(0);
 
         long withAdvancePayment = allProjects.stream()
-                .filter(p -> p.getAdvancePayment().compareTo(BigDecimal.ZERO) > 0)
+                .filter(p -> p.getAdvancePayment() != null && p.getAdvancePayment() > 0)
                 .count();
 
-        BigDecimal avgAdvancePayment = allProjects.stream()
-                .map(Project::getAdvancePayment)
-                .filter(p -> p.compareTo(BigDecimal.ZERO) > 0)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        long totalAdvance = allProjects.stream()
+                .mapToLong(p -> p.getAdvancePayment() != null ? p.getAdvancePayment() : 0)
+                .sum();
 
-        if (withAdvancePayment > 0) {
-            avgAdvancePayment = avgAdvancePayment.divide(BigDecimal.valueOf(withAdvancePayment), RoundingMode.HALF_UP);
-        }
+        long avgAdvancePayment = withAdvancePayment > 0 ? totalAdvance / withAdvancePayment : 0;
 
         long withLinks = allProjects.stream()
                 .filter(p -> p.getProjectLink() != null && !p.getProjectLink().isBlank())
@@ -175,21 +149,18 @@ public class ProjectService {
                 .filter(p -> p.getCreationDate() != null && p.getCreationDate().isAfter(today.minusMonths(1).atStartOfDay()))
                 .count();
 
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
-        DecimalFormat df = new DecimalFormat("#.##", symbols);
-
         Map<String, Object> stats = new LinkedHashMap<>();
         stats.put("totalEarnings", totalEarnings);
         stats.put("avgProjectCost", avgProjectCost);
         stats.put("maxProjectCost", maxProjectCost);
         stats.put("uniqueClients", uniqueClients);
-        stats.put("successRate", df.format(successRate));
+        stats.put("successRate", String.format(Locale.US, "%.2f", successRate));
         stats.put("totalProjects", totalProjects);
         stats.put("activeProjects", activeProjects.size());
         stats.put("completedCount", completedCount);
         stats.put("cancelledProjects", cancelledProjects.size());
         stats.put("overdueProjects", overdueProjects);
-        stats.put("avgDuration", df.format(avgDuration));
+        stats.put("avgDuration", String.format(Locale.US, "%.2f", avgDuration));
         stats.put("withAdvancePayment", withAdvancePayment);
         stats.put("avgAdvancePayment", avgAdvancePayment);
         stats.put("withLinks", withLinks);
