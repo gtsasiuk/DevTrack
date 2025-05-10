@@ -34,10 +34,12 @@ public class Project {
 
     @Column(name = "total_price", nullable = false)
     @Min(value = 0)
+    @Builder.Default
     private Long totalPrice = 0L;
 
     @Column(name = "advance_payment")
     @Min(value = 0)
+    @Builder.Default
     private Long advancePayment = 0L;
 
     @Column(name = "creation_date", updatable = false)
@@ -45,12 +47,15 @@ public class Project {
     private LocalDateTime creationDate;
 
     @Column(name = "deadline")
+    @Builder.Default
     private LocalDate deadline = LocalDate.now();
 
     @Column(name = "project_link")
+    @Builder.Default
     private String projectLink = "";
 
     @Column(name = "description")
+    @Builder.Default
     private String description = "";
 
     @ManyToOne

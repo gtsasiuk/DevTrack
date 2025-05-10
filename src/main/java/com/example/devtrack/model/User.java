@@ -37,6 +37,7 @@ public class User {
     private LocalDateTime creationDate;
 
     @Column(name = "enabled")
+    @Builder.Default
     private boolean enabled = false;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -45,9 +46,11 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
+    @Builder.Default
     private List<Role> roles = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
+    @Builder.Default
     private List<Project> projects = new ArrayList<>();
 
     @Override
