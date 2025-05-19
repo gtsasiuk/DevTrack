@@ -29,6 +29,7 @@ public class WebLocaleConfig implements WebMvcConfigurer {
         resolver.setDefaultLocale(Locale.ENGLISH);
         resolver.setCookieName("lang");
         resolver.setCookieMaxAge(3600 * 24 * 30);
+        resolver.setCookieSecure(true);
         return resolver;
     }
 

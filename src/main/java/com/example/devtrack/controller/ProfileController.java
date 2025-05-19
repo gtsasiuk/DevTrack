@@ -46,10 +46,6 @@ public class ProfileController {
     public String profile(Model model, HttpServletRequest request) {
         String token = getJwtToken(request);
 
-        if (token == null || !jwtUtil.isValidToken(token)) {
-            return "redirect:/auth/login";
-        }
-
         String username = jwtUtil.extractUsername(token);
         User currentUser = userService.findByUsername(username);
         model.addAttribute("user", currentUser);
@@ -62,10 +58,6 @@ public class ProfileController {
     @GetMapping("/change_profile")
     public String changeProfile(Model model, HttpServletRequest request) {
         String token = getJwtToken(request);
-
-        if (token == null || !jwtUtil.isValidToken(token)) {
-            return "redirect:/auth/login";
-        }
 
         String username = jwtUtil.extractUsername(token);
         User currentUser = userService.findByUsername(username);
@@ -80,9 +72,6 @@ public class ProfileController {
                                 HttpServletResponse response,
                                 Model model) {
         String token = getJwtToken(request);
-        if (token == null || !jwtUtil.isValidToken(token)) {
-            return "redirect:/auth/login";
-        }
 
         String currentUsername = jwtUtil.extractUsername(token);
         User currentUser = userService.findByUsername(currentUsername);
@@ -131,10 +120,6 @@ public class ProfileController {
     public String changePassword(Model model, HttpServletRequest request) {
         String token = getJwtToken(request);
 
-        if (token == null || !jwtUtil.isValidToken(token)) {
-            return "redirect:/auth/login";
-        }
-
         String username = jwtUtil.extractUsername(token);
         User currentUser = userService.findByUsername(username);
         model.addAttribute("user", currentUser);
@@ -148,9 +133,6 @@ public class ProfileController {
                                  HttpServletRequest request,
                                  Model model) {
         String token = getJwtToken(request);
-        if (token == null || !jwtUtil.isValidToken(token)) {
-            return "redirect:/auth/login";
-        }
 
         String newPassword = updatedUser.getPassword();
         String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).{8,}$";

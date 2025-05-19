@@ -86,10 +86,6 @@ public class ProjectController {
     public String createProject(@ModelAttribute Project project, HttpServletRequest request) {
         String token = getJwtToken(request);
 
-        if (token == null || !jwtUtil.isValidToken(token)) {
-            return "redirect:/auth/login";
-        }
-
         String username = jwtUtil.extractUsername(token);
         User currentUser = userService.findByUsername(username);
 
@@ -102,11 +98,6 @@ public class ProjectController {
 
     @GetMapping("/edit/{id}")
     public String editProject(@PathVariable Long id, Model model, HttpServletRequest request) {
-        String token = getJwtToken(request);
-        if (token == null || !jwtUtil.isValidToken(token)) {
-            return "redirect:/auth/login";
-        }
-
         Project project = projectService.findById(id);
         model.addAttribute("project", project);
         model.addAttribute("requestURI", request.getRequestURI());
@@ -116,9 +107,6 @@ public class ProjectController {
     @PostMapping("/edit/{id}")
     public String updateProject(@PathVariable Long id, @ModelAttribute Project project, HttpServletRequest request) {
         String token = getJwtToken(request);
-        if (token == null || !jwtUtil.isValidToken(token)) {
-            return "redirect:/auth/login";
-        }
 
         String username = jwtUtil.extractUsername(token);
         User currentUser = userService.findByUsername(username);
@@ -131,11 +119,6 @@ public class ProjectController {
 
     @GetMapping("/delete/{id}")
     public String deleteProject(@PathVariable Long id, HttpServletRequest request) {
-        String token = getJwtToken(request);
-        if (token == null || !jwtUtil.isValidToken(token)) {
-            return "redirect:/auth/login";
-        }
-
         projectService.delete(id);
         return "redirect:/projects";
     }

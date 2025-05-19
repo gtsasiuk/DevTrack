@@ -92,6 +92,7 @@ public class AuthController {
             if (!"localhost".equalsIgnoreCase(response.getHeader("Host"))) {
                 jwtCookie.setSecure(true);
             }
+            jwtCookie.setAttribute("SameSite", "Lax");
             response.addCookie(jwtCookie);
             model.addAttribute("success", true);
 
@@ -169,6 +170,7 @@ public class AuthController {
             if (!"localhost".equalsIgnoreCase(response.getHeader("Host"))) {
                 jwtCookie.setSecure(true);
             }
+            jwtCookie.setAttribute("SameSite", "Lax");
             response.addCookie(jwtCookie);
 
             return "redirect:/home";

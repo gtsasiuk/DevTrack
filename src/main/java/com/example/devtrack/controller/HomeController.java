@@ -36,10 +36,6 @@ public class HomeController {
     public String home(Model model, HttpServletRequest request) {
         String token = getJwtToken(request);
 
-        if (token == null || !jwtUtil.isValidToken(token)) {
-            return "redirect:/auth/login";
-        }
-
         String username = jwtUtil.extractUsername(token);
         User currentUser = userService.findByUsername(username);
         List<Project> projects = projectService.sortByDeadlines(currentUser);
