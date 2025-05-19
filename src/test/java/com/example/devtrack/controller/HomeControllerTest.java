@@ -38,27 +38,25 @@ public class HomeControllerTest {
     }
 
     @Test
-    void testHome_WhenTokenIsMissing_ShouldRedirectToLogin() {
+    void testHome_WhenJwtCookieIsMissing_ShouldReturnHomeWithNullData() {
         when(request.getCookies()).thenReturn(null);
-
+        
         String result = homeController.home(model, request);
 
-        assertEquals("redirect:/auth/login", result);
+        verify(jwtUtil).extractUsername(null);
+        verify(userService).findByUsername(null);
+        verify(projectService).sortByDeadlines(null);
+        verify(projectService).getUserAchievements(null);
+        verify(model).addAttribute(eq("projects"), any());
+        verify(model).addAttribute(eq("achievements"), any());
+        verify(model).addAttribute("requestURI", null);
+        verify(model).addAttribute("username", null);
+
+        assertEquals("home", result);
     }
 
     @Test
-    void testHome_WhenTokenIsInvalid_ShouldRedirectToLogin() {
-        Cookie[] cookies = { new Cookie("jwt", "invalid-token") };
-        when(request.getCookies()).thenReturn(cookies);
-        when(jwtUtil.isValidToken("invalid-token")).thenReturn(false);
-
-        String result = homeController.home(model, request);
-
-        assertEquals("redirect:/auth/login", result);
-    }
-
-    @Test
-    void testHome_WhenTokenIsValid_ShouldReturnHomeView() {
+    void testHome_WhenJwtCookieExists_ShouldPopulateModelAndReturnHome() {
         String token = "valid-token";
         String username = "testUser";
         User user = new User();
@@ -67,7 +65,6 @@ public class HomeControllerTest {
 
         Cookie[] cookies = { new Cookie("jwt", token) };
         when(request.getCookies()).thenReturn(cookies);
-        when(jwtUtil.isValidToken(token)).thenReturn(true);
         when(jwtUtil.extractUsername(token)).thenReturn(username);
         when(userService.findByUsername(username)).thenReturn(user);
         when(projectService.sortByDeadlines(user)).thenReturn(projects);

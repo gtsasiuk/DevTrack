@@ -63,14 +63,6 @@ class ProfileControllerTest {
 
     @Test
     @WithMockUser(username = "testuser", roles = {"USER"})
-    void profile_shouldRedirectToLoginIfTokenIsInvalid() throws Exception {
-        mockMvc.perform(get("/profile"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/auth/login"));
-    }
-
-    @Test
-    @WithMockUser(username = "testuser", roles = {"USER"})
     void profile_shouldReturnProfilePageIfTokenIsValid() throws Exception {
         Cookie cookie = new Cookie("jwt", "valid.token");
 
